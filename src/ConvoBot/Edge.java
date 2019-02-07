@@ -1,6 +1,6 @@
 package ConvoBot;
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
 
 	String startNode;
 	String endNode;
@@ -13,10 +13,13 @@ public class Edge {
 		weight = 0;
 		multiplier = m;
 	}
-	
-	public Edge(String sN, String eN, Integer w, Integer m) {
-		this(sN, eN, m);
-		weight = w;
+
+	@Override
+	public int compareTo(Edge e) {
+		if (this.weight == e.weight)
+			return 0;
+		else
+			return this.weight > e.weight ? 1: -1;
 	}
 	
 }
