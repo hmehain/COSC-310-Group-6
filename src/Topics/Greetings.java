@@ -8,7 +8,7 @@ public class Greetings extends Topic{
 	@Override
 	public void messageRules(String input) {
 		/*
-		 * if user says_____ then respond with ____
+		 * fill in with pseudocode
 		 */
 		
 	}
