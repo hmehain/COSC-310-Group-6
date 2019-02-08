@@ -24,4 +24,10 @@ public class Discussion extends Topic {
 		
 	}
 
+	@Override
+	public void messageRules(String input) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

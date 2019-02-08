@@ -7,6 +7,12 @@ public class SmallTalk extends Topic {
 			"Are you male or female?",
 			"Thank you *! That's all I needed. How are you feeling today?"};
 
+	@Override
+	public void messageRules(String input) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

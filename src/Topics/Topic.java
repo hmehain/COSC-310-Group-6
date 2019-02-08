@@ -10,8 +10,14 @@ public abstract class Topic {
 
 	public void startTopic() {
 		currentTopic = true;
+		while (currentTopic) {
+			messageRules(input());
+		}
 	};
 	
+	public abstract void messageRules(String input);
+		
+
 	public void endTopic() {
 		currentTopic = false;
 	};
