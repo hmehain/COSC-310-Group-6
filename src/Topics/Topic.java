@@ -1,8 +1,16 @@
 package Topics;
 
-public abstract class Topic {
+import ConvoBot.Message;
 
-	abstract void startTopic();
+public abstract class Topic {
 	
-	abstract void endTopic();
+	public boolean currentTopic;
+
+	public void startTopic() {
+		currentTopic = true;
+	};
+	
+	public void endTopic() {
+		currentTopic = false;
+	};
 }

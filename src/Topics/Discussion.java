@@ -3,13 +3,13 @@ package Topics;
 public class Discussion extends Topic {
 
 	@Override
-	void startTopic() {
+	public void startTopic() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void endTopic() {
+	public void endTopic() {
 		// TODO Auto-generated method stub
 		
 	}

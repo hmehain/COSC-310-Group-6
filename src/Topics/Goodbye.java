@@ -2,14 +2,16 @@ package Topics;
 
 public class Goodbye extends Topic {
 
+	String[] messages = {"Goodbye *"};
+	
 	@Override
-	void startTopic() {
+	public void startTopic() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void endTopic() {
+	public void endTopic() {
 		// TODO Auto-generated method stub
 		
 	}
