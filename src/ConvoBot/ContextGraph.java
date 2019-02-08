@@ -17,18 +17,21 @@ public class ContextGraph {
 	PriorityQueue<Edge> patientCharacteristics;
 	
 	/**
-	 * Creates initial graph by reading in info from characteristics.txt file
+	 * Constructor: creates initial graph by reading in info from specified file
 	 */
 	
-	public void createGraph() {
+	public ContextGraph(String filename) {
 		
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("characteristics.txt")));){
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));){
 		    String line;
+		    characteristicNodes = new HashMap<String, Characteristic>();
+		    solutionNodes = new HashMap<String, Solution>();
+		    patientCharacteristics = new PriorityQueue<Edge>();
 		    while ((line = br.readLine()) != null) {
 		        String[] sections = line.split("-");
 		        // sections[0] is the name, sections[1] is the synonymns, and sections[2] is the patientSolutions
 		        String name = sections[0];
-		        ArrayList<String> synonyms = (ArrayList<String>) Arrays.asList(sections[1]);
+		        ArrayList<String> synonyms = new ArrayList(Arrays.asList(sections[1]));
 		    	PriorityQueue<Edge> patientSolutions = new PriorityQueue<Edge>();
 		    	String[] solutionNames = sections[2].split(",");
 		    	for (String s: Arrays.asList(solutionNames)) {
@@ -52,5 +55,28 @@ public class ContextGraph {
 	public boolean updateGraph() {
 		
 		return true;
+	}
+	/**
+	 * Overwriting toString() method to use for testing in ContextGraphTest
+	 */
+	public String toString() {
+		StringBuilder s = new StringBuilder("Characteristics");
+		for (Characteristic c: characteristicNodes.values()) {
+			s.append("\n\tName: " + c.name + "\n\tSynonymns: ");
+			for(String s1: c.synonyms) 
+				s.append(s1 + ", ");
+			s.append("\n\tSolutions: ");
+			for(Edge e: c.patientSolutions)
+				s.append(e.endNode + ", ");
+		}
+		s.append("\n\nSolutions");
+		for (Solution sol: solutionNodes.values())
+			s.append("\n\t" + sol.name + " weight: " + sol.weight);
+		s.append("\n\nEdges");
+		for (Edge e: patientCharacteristics) {
+			s.append("\n\t" + e.endNode);
+		}
+		
+		return s.toString();
 	}
 }

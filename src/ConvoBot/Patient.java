@@ -2,7 +2,27 @@ package ConvoBot;
 
 public class Patient {
 	
-	//I'm not sure if any of these need to be private or not
-		public int age;
-		public String name;
+	int age;
+	String name;
+	ContextGraph patientGraph;
+	boolean discussionOn;
+	
+	public Patient() {
+		patientGraph = new ContextGraph("characteristics.txt");
+		discussionOn = true;
+	}
+	
+	public void startConversation() {
+		Message message = new Message();
+		while (discussionOn) {
+			message.output();
+			message.input();
+		}
+		
+	}
+	
+	public void endConversation() {
+		discussionOn = false;
+	}
+	
 }

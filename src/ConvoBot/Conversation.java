@@ -2,5 +2,8 @@ package ConvoBot;
 
 public class Conversation {
 
-	Patient patient;
+	public void main(String[] args) {
+		Patient p = new Patient();
+		p.startConversation();
+	}
 }

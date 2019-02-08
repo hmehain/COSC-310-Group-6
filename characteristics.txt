@@ -1,7 +1,7 @@
-depression-irritable, sad, withdrawn--
+depression-irritable,sad,withdrawn--
 anxiety-worry-therapy
 anger-
-substance abuse-drugs, alcohol-group therapy, detox, residential treatment
+substance abuse-drugs,alcohol-group therapy,detox,residential treatment
 stress
 low self-esteem
 trauma
