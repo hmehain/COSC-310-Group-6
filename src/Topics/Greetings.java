@@ -7,7 +7,9 @@ public class Greetings extends Topic{
 
 	@Override
 	public void messageRules(String input) {
-		// TODO Auto-generated method stub
+		/*
+		 * if user says_____ then respond with ____
+		 */
 		
 	}
 
