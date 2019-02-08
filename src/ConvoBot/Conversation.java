@@ -19,6 +19,7 @@ public class Conversation {
 		
 		for(Topic t: conversationTopic) {
 			t.startTopic();
+			
 			t.endTopic();
 		}
 		
