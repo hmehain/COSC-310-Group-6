@@ -17,4 +17,33 @@ public class Characteristic {
 		this.patientSolutions = patientSolutions;
 		
 	}
+	// Getters and Setters
+	
+	public String getName() {
+		return name;
+	}
+	
+	public Integer getWeight() {
+		return weight;
+	}
+	
+	public ArrayList<String> getSynonyms() {
+		return synonyms;
+	}
+	
+	public PriorityQueue<Edge> getSolutions() {
+		return patientSolutions;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public void setWeight(Integer weight) {
+		this.weight = weight;
+	}
+	
+	public void setSynonyms(ArrayList<String> synonyms) {
+		this.synonyms = synonyms;
+	}
 }

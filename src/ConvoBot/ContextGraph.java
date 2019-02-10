@@ -12,9 +12,9 @@ import java.util.PriorityQueue;
 
 public class ContextGraph {
 
-	HashMap<String, Characteristic> characteristicNodes;
-	HashMap<String, Solution> solutionNodes;
-	PriorityQueue<Edge> patientCharacteristics;
+	public HashMap<String, Characteristic> characteristicNodes;
+	public HashMap<String, Solution> solutionNodes;
+	public PriorityQueue<Edge> patientCharacteristics;
 	
 	/**
 	 * Constructor: creates initial graph by reading in info from specified file
@@ -52,8 +52,21 @@ public class ContextGraph {
 		}
 	}
 	
+	// Getters
+	
+	public HashMap<String, Characteristic> getCharacteristicNodes(){
+		return characteristicNodes;
+	}
+	
+	public HashMap<String, Solution> getSolutionNodes(){
+		return solutionNodes;
+	}
+	
+	public PriorityQueue<Edge> getPatientCharacteristics(){
+		return patientCharacteristics;
+	}
+	
 	public boolean updateGraph() {
-		
 		return true;
 	}
 	/**
@@ -79,4 +92,5 @@ public class ContextGraph {
 		
 		return s.toString();
 	}
+	
 }
