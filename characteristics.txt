@@ -1,8 +1,5 @@
-depression-irritable,sad,withdrawn--
-anxiety-worry-therapy
-anger-
-substance abuse-drugs,alcohol-group therapy,detox,residential treatment
-stress
-low self-esteem
-trauma
-grief
+depression | irritable, sad, withdrawn | CBT, therapy, self-care like eating showering and sleeping
+anxiety | worried, nervous, stressed, nervous | CBT, mindfulness, journaling,
+anger | rage, frustration, frustrated | exercise, mindfulness
+stress | worried, busy | exercise, prioritize tasks
+insomnia | sleeplessness, tired, trouble sleeping | exercise, don't work in bed, avoid screens before bed
