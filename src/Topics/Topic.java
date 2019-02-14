@@ -4,37 +4,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public abstract class Topic {
-	
-	public boolean currentTopic;
-
-	public void startTopic() {
-		currentTopic = true;
-		while (currentTopic) {
-			messageRules(input());
-		}
-	};
-	
-	public abstract void messageRules(String input);
-		
-
-	public void endTopic() {
-		currentTopic = false;
-	};
+public class Topic {
 	
 	/**
-	 * Produces what the chatbot says
+	 * Each topic corresponds with a number
+	 * 0-Greetings
+	 * 1-SmallTalk
+	 * 2-Discussion
+	 * 3-Advice
+	 * 4-Goodbye
 	 */
-	public void output(String s) {
-		System.out.println("\n" + s);
-	}
-	/**
-	 * Interprets what the user says
-	 */
-	public String input() {
-		Scanner in = new Scanner(System.in);
-		return in.nextLine();
-	}
+	public static int currentTopic; 
 	
 	public ArrayList<String> extractKeywords() {
 		ArrayList<String> keywords = new ArrayList<String>();
