@@ -8,7 +8,8 @@ public class Patient {
 	
 	
 	public Patient() {
-		patientGraph = new ContextGraph("characteristics.txt");
+		// does not match current constructor, files need to be read first
+		//patientGraph = new ContextGraph("characteristics.txt");
 		
 	}
 	

@@ -1,0 +1,5 @@
+characteristic1;synonym1,synonym2;treatment1-1,treatment2-7,treatment3-4;
+characteristic2;synonym3,synonym4,synonym5;treatment2-7,faketreatment1-6,treatment4-2;
+characteristic3;synonym6;treatment1-3,treatment4-5,treatment6-2;
+characteristic4;synonym7,synonym8;faketreatment2-3,faketreatment3-2,faketreatment4-9;
+characteristic5;synonym9,synonym10,synonym11;treatment2-1,treatment7-4,faketreatment5-2;
