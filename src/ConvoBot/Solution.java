@@ -1,22 +1,29 @@
 package ConvoBot;
 
-public class Solution {
+public class Solution extends Subject {
 
-	String name;
-	Integer weight;
-	
+	// currently solutions only have a name, read in from file
 	public Solution(String name) {
-		this.name = name;
-		weight = 0;
+		super(name);
 	}
 	
-	// Getters and Setters
+	@Override
+	public String toString() {
+		return this.getName();
+	}
+	
 	
 	public String getName() {
-		return name;
+		return super.getName();
+	}
+	public void setName(String name) {
+		super.setName(name);
 	}
 	
-	public Integer getWeight() {
-		return weight;
+	public boolean equals(Solution s) {
+		if (this.getName().equals(s.getName())) {
+			return true;
+		}
+		return false;
 	}
 }
