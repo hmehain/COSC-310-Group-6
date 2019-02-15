@@ -10,7 +10,7 @@ public class Greetings extends Topic {
 			"Welcome 0, can I ask you a few questions before we start?",
 			"Is there something you would like to talk about?"};
 
-	public static void startTopic() {
+	public static String startTopic() {
 		
 		System.out.println("*************Starting Greetings topic************");
 		
@@ -68,5 +68,6 @@ public class Greetings extends Topic {
 		} else {
 			currentTopic++;
 		}
+		return name;
 	}
 }

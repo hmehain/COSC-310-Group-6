@@ -2,8 +2,6 @@ package ConvoBot;
 
 import Topics.*;
 
-import Topics.*;
-
 public class Conversation {
 
 	Patient patient;
@@ -16,7 +14,7 @@ public class Conversation {
 			//System.out.println("////current Topic: " + Topic.currentTopic);
 			switch (Topic.currentTopic) {
 			case 0:
-				Greetings.startTopic();
+				p.setName(Greetings.startTopic());
 				break;
 			case 1:
 				SmallTalk2.startTopic();
@@ -28,7 +26,7 @@ public class Conversation {
 				Advice2.startTopic();
 				break;
 			case 4:
-				Goodbye2.startTopic();
+				Goodbye2.startTopic(p.getName());
 				break;
 			}
 

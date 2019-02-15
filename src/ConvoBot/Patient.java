@@ -2,15 +2,28 @@ package ConvoBot;
 
 public class Patient {
 	
-	int age;
-	String name;
+	private int age;
+	private String name;
 	ContextGraph patientGraph;
 	
-	
-	public Patient() {
-		// does not match current constructor, files need to be read first
-		//patientGraph = new ContextGraph("characteristics.txt");
-		
+
+	public int getAge() {
+		return age;
+	}
+
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
