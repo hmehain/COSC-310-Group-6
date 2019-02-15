@@ -8,6 +8,6 @@ We identified five problems common among university students-depression, anxiety
 
 # Class Structure
 
-[UML diagram](https://github.com/hmehain/COSC-310-Group-6/blob/master/chatbot%20UML%202.jpg)
+![UML diagram](https://github.com/hmehain/COSC-310-Group-6/blob/master/chatbot%20UML%202.jpg)
 
 
