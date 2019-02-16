@@ -6,25 +6,46 @@ public class Edge implements Comparable<Edge> {
 	private Node endNode;
 	private Double weightIn; 
 	private Double weightOut;
-	private int multiplier; //doesn't make sense to have double weight, int multiplier, fix later
+	private double multiplier; 
 	
+	//Enable/Disable nodes
+	private boolean enabled; //Set it to either true (enabled) or false (disabled)
+		
+	//getter and setter for enabled
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		// if setEnabled == true, update edge weights 
+		this.enabled = enabled;
+		
+		/*
+		if (this.enabled == true) {
+			updateEdgeWeight();
+		}
+		*/
+	}
 	
-	// constructors, simplify later?
+	/*
 	public Edge(Node sN, Node eN) {
 		this(sN, eN, 0.0, 1);
 	}
-	public Edge(Node sN, Node eN, int m) {
+	public Edge(Node sN, Node eN, double m) {
 		this(sN, eN, 0.0, m);
 	}
+	
 	public Edge(Node sN, Node eN, Double w) {
 		this(sN, eN, w, 1);
 	}
-	public Edge(Node sN, Node eN, Double w, int m) {
-		startNode = sN;
-		endNode = eN;
-		weightIn = w;
-		multiplier = m;
-		weightOut = w*m;
+	*/
+	public Edge(Node sN, Node eN, Double w, double m) {
+		this.startNode = sN;
+		this.endNode = eN;
+		this.weightIn = w;
+		this.multiplier = m;
+		this.weightOut = w*m;
+		this.enabled = true;
 	}
 
 	// getter/setter methods for weights, set methods are private
@@ -44,15 +65,25 @@ public class Edge implements Comparable<Edge> {
 	}
 	
 	// updates edge weights, weightIn = weight of start node, weightOut = weightIn * multiplier
+	
 	public void updateEdgeWeight() {
+		// if node == disabled, weightIn = 0
+		/*
+		if (startNode.isEnabled() == false) {
+			startNode.setWeight(0.0);
+		}
+		else {
+			setWeightIn(startNode.getWeight());
+		}
+		
+		*/
 		setWeightIn(startNode.getWeight());
 		setWeightOut(this.weightIn * this.multiplier);
-		
+		;
 		if (!endNode.getSubjectName().equals("centerNode")) {
 			this.endNode.collectWeights();
 		}
 	}
-	
 	
 	@Override
 	public String toString() {
@@ -60,10 +91,10 @@ public class Edge implements Comparable<Edge> {
 	}
 	
 	// getter/setter methods for multiplier
-	public int getMultiplier() {
+	public double getMultiplier() {
 		return this.multiplier;
 	}
-	public void setMultiplier(int multiplier) {
+	public void setMultiplier(double multiplier) {
 		this.multiplier = multiplier;
 	}
 
@@ -73,6 +104,14 @@ public class Edge implements Comparable<Edge> {
 	}
 	public Node getStartNode() {
 		return this.startNode;
+	}
+	
+	private void setStartNode(Node startNode) {
+		this.startNode = startNode;
+	}
+	
+	private void setEndNode(Node endNode) {
+		this.endNode = endNode;
 	}
 	
 	// not currently used
