@@ -8,12 +8,12 @@ public class SolutionMultiplierPair {
 	 */
 	
 	Solution solution;
-	int multiplier;
+	double multiplier;
 	
 	SolutionMultiplierPair(Solution solution) {
 		this(solution, 1);
 	}
-	SolutionMultiplierPair(Solution solution, int multiplier) {
+	SolutionMultiplierPair(Solution solution, double multiplier) {
 		setSolution(solution);
 		setMultiplier(multiplier);
 	}
@@ -21,15 +21,15 @@ public class SolutionMultiplierPair {
 	Solution getSolution() {
 		return solution;
 	}
-	int getMultiplier() {
+	double getMultiplier() {
 		return multiplier;
 	}
 	
 	void setSolution(Solution solution) {
 		this.solution = solution;
 	}
-	void setMultiplier(int multiplier) {
-		this.multiplier = multiplier;
+	void setMultiplier(double multiplier2) {
+		this.multiplier = multiplier2;
 	}
 	
 	@Override
