@@ -19,8 +19,12 @@ public class Advice extends Topic{
 		
 		ANXIETY, ANGER, STRESS, INSOMNIA
 		Exercise is an important aspect of self-care. When you're feeling {characteristic}, try going for a walk or doing some simple stretches, or a more vigorous workout if you're up for it. Your body will release positive endorphins, and it's a great chance to reset.
+		
 		DEPRESSION, STRESS
 		It's easy to get so overwhelmed that you can't do anything at all. Pick one simple task to do right away, like getting yourself a glass of water or placing clothes in a laundry basket. It's easier to start with something easy, then even if you can't do anything else, you've still made progess.
+		
+		INSOMNIA
+		It's important to dedicate time before bed ot wind down. Avoid screens, or turn on blue light filters, and get to bed at the same time every night.
 		
 		IF ANY CHARACTERISTIC HAS LARGE EDGE WEIGHTS
 		I can't give advice for every issue, but I recommend seeking out a professional counsellor. 
