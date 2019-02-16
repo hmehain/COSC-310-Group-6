@@ -43,31 +43,59 @@ public class ContextGraphTest{
 		ContextGraph g = new ContextGraph(characteristicsList, solutionsList);
 		
 		// prints string representation of graph
-		System.out.print("\n\n" + g.toString());
+		System.out.print("\n" + g.toString());
+		
+		System.out.println("\n\nTest incrementing nodes");
 		
 		// increments characteristic
-		g.incrementCharacteristic(characteristicsList.get(4));
-		g.incrementCharacteristic(characteristicsList.get(2), 2.0);
-		g.incrementCharacteristic(characteristicsList.get(0), 5);
+		g.incrementCharacteristic(characteristicsList.get(0), 6);
+		g.incrementCharacteristic(characteristicsList.get(1));
+		g.incrementCharacteristic(characteristicsList.get(2), 7.1);
+		g.incrementCharacteristic(characteristicsList.get(3), 2.9);
+		g.incrementCharacteristic(characteristicsList.get(4), 8);
 		
-		System.out.print("\n\n" + g.toString());
+		System.out.print("\n" + g.toString());
 		
+		// gets top solution from graph (solution with highest weight)
+		Solution topSolution = g.getTopSolution();
+		System.out.println("\nReturned solution: " + topSolution.toString());
+			
+		// gets array of all solutions sorted by weight (highest - lowest)
+		Solution[] topSolutions = g.getTopSolutionsArray();
+			
+		System.out.println("Top solutions");
+		for (Solution s : topSolutions) {
+			System.out.println("\t" + s.toString());
+		}
+		
+		
+		
+		
+		System.out.println("\n\nTest enabling/disabling nodes and edges");
+		System.out.println("Characteristic nodes 2 and 5 disabled, solution nodes 2, 9, and 10 disabled");
+		System.out.println("edges ch1->s2, ch5->s8, ch5->s10 disabled");
+		
+		g.setNodeEnabled(characteristicsList.get(1), false);
 		g.setNodeEnabled(characteristicsList.get(4), false);
-		g.setEdgeEnabled(characteristicsList.get(2), solutionsList.get(3), true);
-		g.setNodeEnabled(characteristicsList.get(0), false);
-		g.setEdgeEnabled(characteristicsList.get(1), solutionsList.get(3), false);
-		g.setNodeEnabled(solutionsList.get(2), false);
+		
+		g.setNodeEnabled(solutionsList.get(1), false);
+		g.setNodeEnabled(solutionsList.get(8), false);
+		g.setNodeEnabled(solutionsList.get(9), false);
+		
+		g.setEdgeEnabled(characteristicsList.get(0), solutionsList.get(2), false);
+		g.setEdgeEnabled(characteristicsList.get(4), solutionsList.get(7), false);
+		g.setEdgeEnabled(characteristicsList.get(4), solutionsList.get(9), false);
 		
 		System.out.print("\n\n" + g.toString());
 		
 		
 		
 		// gets top solution from graph (solution with highest weight)
-		Solution topSolution = g.getTopSolution();
+		topSolution = g.getTopSolution();
 		System.out.println("\nReturned solution: " + topSolution.toString());
 		
 		// gets array of all solutions sorted by weight (highest - lowest)
-		Solution[] topSolutions = g.getTopSolutionsArray();
+		topSolutions = g.getTopSolutionsArray();
 		
 		System.out.println("Top solutions");
 		for (Solution s : topSolutions) {
@@ -111,22 +139,27 @@ public class ContextGraphTest{
 		        // sections[0] is the name, sections[1] is the synonyms, and sections[2] is the patientSolutions
 		        String name = sections[0];
 		        
-		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));		        
-		        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
-		       
+		        ArrayList<String> synonyms;
+		        ArrayList<String> solutions;
+		        
+		        synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));
+		        
 		        Characteristic ch = new Characteristic(name, synonyms);
 		        
-		        for (String sm : solutions) {
-		        	int separaterIndex = sm.indexOf('-');
-		        	String solution = sm.substring(0, separaterIndex);
-		        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
-		        	
-		        	for (Solution s : solutionsList) {
-		        		if (solution.equals(s.getName())) {
-		        			ch.addSolution(s, multiplier);
-		        		}
-		        	}
-		        	
+		        if (sections.length > 2) { // checks that characteristic has solutions (otherwise possibility of null pointer exception)
+		        	solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
+		        
+			        for (String sm : solutions) {
+			        	int separaterIndex = sm.indexOf('-');
+			        	String solution = sm.substring(0, separaterIndex);
+			        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
+			        	
+			        	for (Solution s : solutionsList) {
+			        		if (solution.equals(s.getName())) {
+			        			ch.addSolution(s, multiplier);
+			        		}
+			        	}
+			        }
 		        }
 		        
 		        characteristicsList.add(ch);

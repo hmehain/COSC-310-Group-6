@@ -21,12 +21,12 @@ public class Node implements Comparable<Node> {
 	public void setEnabled(boolean enabled) {
 		// if enabled set to true, update edges away from node
 	
-		 //if (!this.getSubjectName().equals("centerNode")) { 
-				this.enabled = enabled;
-			 //for (Edge e : edgesFromNode) {
-				 //e.updateEdgeWeight();
-		//}
-		//}
+		 if (!this.getSubjectName().equals("centerNode")) { 
+			this.enabled = enabled;
+			for (Edge e : edgesFromNode) {
+				e.updateEdgeWeight();
+			}
+		}
 	}
 	
 	// creates a new node with no to/from edges
@@ -85,10 +85,7 @@ public class Node implements Comparable<Node> {
 		
 		if (!this.getSubjectName().equals("centerNode")) {
 			for (Edge e : edgesFromNode) {
-				// if edge == enabled only
-				//if (e.isEnabled() == true) {
-					e.updateEdgeWeight();
-				//}
+				e.updateEdgeWeight();
 			}
 		}
 	}
@@ -96,20 +93,19 @@ public class Node implements Comparable<Node> {
 	// collects total weights (out) of edges leading to node, used to 'fill buckets' 
 	public void collectWeights() {
 		Double weightSum = 0.0;
-		for (Edge e : edgesToNode) {
-			// if edge == enabled only
-			//if (e.isEnabled() == true) {
-				weightSum += e.getWeightOut();
-			//}
+		if (this.isEnabled()) {
+			for (Edge e : edgesToNode) {
+				// if edge == enabled only
+				//if (e.isEnabled() == true) {
+					weightSum += e.getWeightOut();
+				//}
+			}
 		}
 		this.setWeight(weightSum);
 		
 		if (!this.getSubjectName().equals("centerNode")) {
 			for (Edge e : edgesFromNode) {
-				// if edge is enabled only
-				//if (e.isEnabled() == true) {
-					e.updateEdgeWeight();
-				//}
+				e.updateEdgeWeight();
 			}
 		}
 	}

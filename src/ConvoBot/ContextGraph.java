@@ -303,10 +303,10 @@ public class ContextGraph {
         Iterator value = edges.iterator(); 
   
         // Displaying the values after iterating through the queue 
-        System.out.println("The iterator values are: "); 
+        //System.out.println("The iterator values are: "); 
         while (value.hasNext()) { 
         	Edge e = (Edge) value.next();
-            System.out.println(e.toString()); 
+            //System.out.println(e.toString()); 
             if (((Edge) e).getEndNode().equals(child_node)) {
             	 e.setEnabled(enabled);
             }
@@ -461,13 +461,14 @@ public class ContextGraph {
 			s.append("=");
 			s.append(e.getWeightOut());
 			s.append(", ");
-			s.append(e.isEnabled());
+			s.append((e.isEnabled() ? "edge enabled" : "edge disabled"));
 			s.append(" : ");
 			s.append(e.getEndNode().getSubjectName());
 			s.append(", ");
 			s.append(e.getEndNode().getWeight());
 			s.append(", ");
-			s.append(e.getEndNode().isEnabled());
+			s.append(e.getEndNode().isEnabled() ? "node enabled" : "node disabled");
+			//s.append(e.getEndNode().isEnabled());
 			s.append("]\n");
 		}
 		
@@ -479,7 +480,8 @@ public class ContextGraph {
 			s.append(", ");
 			s.append(n.getWeight());
 			s.append(", ");
-			s.append(n.isEnabled());
+			s.append(n.isEnabled() ? "node enabled" : "node disabled");
+			//s.append(n.isEnabled());
 			
 			for (Edge e : n.getEdgesFromNode()) {
 				s.append("; ");
@@ -488,7 +490,8 @@ public class ContextGraph {
 				s.append(", ");
 				s.append(e.getEndNode().getWeight());
 				s.append(", ");
-				s.append(e.getEndNode().isEnabled());
+				s.append(e.getEndNode().isEnabled() ? "node enabled" : "node disabled");
+				//s.append(e.getEndNode().isEnabled());
 				s.append(" : ");
 				
 				
@@ -498,7 +501,8 @@ public class ContextGraph {
 				s.append("=");
 				s.append(e.getWeightOut());
 				s.append(", ");
-				s.append(e.isEnabled());
+				s.append(e.isEnabled() ? "edge enabled" : "edge disabled");
+				//s.append(e.isEnabled());
 		
 			}
 			
@@ -512,7 +516,8 @@ public class ContextGraph {
 			s.append(", ");
 			s.append(n.getWeight());
 			s.append(", ");
-			s.append(n.isEnabled());
+			s.append(n.isEnabled() ? "node enabled" : "node disabled");
+			//s.append(n.isEnabled());
 			
 			for (Edge e : n.getEdgesToNode()) {
 				s.append("; ");
@@ -521,7 +526,7 @@ public class ContextGraph {
 				s.append(", ");
 				s.append(e.getStartNode().getWeight());
 				s.append(", ");
-				s.append(e.isEnabled());
+				s.append(e.getStartNode().isEnabled() ? "node enabled" : "node disabled");
 				s.append(" : ");
 				
 				
@@ -532,8 +537,8 @@ public class ContextGraph {
 				s.append("=");
 				s.append(e.getWeightOut());
 				s.append(", ");
-				s.append(e.isEnabled());
-			
+				//s.append(e.isEnabled());
+				s.append(e.isEnabled() ? "edge enabled" : "edge disabled");
 			}
 			
 			s.append("]\n");
