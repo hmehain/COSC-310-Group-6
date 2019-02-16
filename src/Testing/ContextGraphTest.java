@@ -52,6 +52,16 @@ public class ContextGraphTest{
 		
 		System.out.print("\n\n" + g.toString());
 		
+		g.setNodeEnabled(characteristicsList.get(4), false);
+		g.setEdgeEnabled(characteristicsList.get(2), solutionsList.get(3), true);
+		g.setNodeEnabled(characteristicsList.get(0), false);
+		g.setEdgeEnabled(characteristicsList.get(1), solutionsList.get(3), false);
+		g.setNodeEnabled(solutionsList.get(2), false);
+		
+		System.out.print("\n\n" + g.toString());
+		
+		
+		
 		// gets top solution from graph (solution with highest weight)
 		Solution topSolution = g.getTopSolution();
 		System.out.println("\nReturned solution: " + topSolution.toString());
@@ -109,7 +119,7 @@ public class ContextGraphTest{
 		        for (String sm : solutions) {
 		        	int separaterIndex = sm.indexOf('-');
 		        	String solution = sm.substring(0, separaterIndex);
-		        	int multiplier = Integer.parseInt(sm.substring(separaterIndex + 1));
+		        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
 		        	
 		        	for (Solution s : solutionsList) {
 		        		if (solution.equals(s.getName())) {
