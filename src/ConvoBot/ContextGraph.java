@@ -2,6 +2,8 @@ package ConvoBot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.PriorityQueue;
 
 public class ContextGraph {
 	
@@ -94,7 +96,7 @@ public class ContextGraph {
 				}
 				
 				if (!checkNodesConnected(chNode, sNode)) {
-					int m = chSolution.getMultiplier();
+					double m = chSolution.getMultiplier();
 					connectCharacteristicToSolution(chNode, sNode, m);
 				}
 			}
@@ -102,8 +104,6 @@ public class ContextGraph {
 			//printGraph();
 		}
 	}
-	
-	
 	
 	/**
 	 * Creates a solution node for a given solution and adds it to solutionNodesList
@@ -139,13 +139,13 @@ public class ContextGraph {
 		Node sNode = createSolutionNode(solution);
 		
 		// sNode = null if solution is already in graph or solution is not in the list of possible solutions
-		if (sNode != null && ((Characteristic)(chNode.subject)).solutionInCharacteristicSolutions(solution)) {
-			int multiplier = ((Characteristic)(chNode.subject)).getMultiplier(solution);
+		if (sNode != null && ((Characteristic)(chNode.getSubject())).solutionInCharacteristicSolutions(solution)) {
+			double multiplier = ((Characteristic)(chNode.getSubject())).getMultiplier(solution);
 			connectCharacteristicToSolution(chNode, sNode, multiplier);
-		} else if (sNode == null && ((Characteristic)(chNode.subject)).solutionInCharacteristicSolutions(solution)){
+		} else if (sNode == null && ((Characteristic)(chNode.getSubject())).solutionInCharacteristicSolutions(solution)){
 			sNode = getSolutionNode(solution);
 			if (sNode != null) {
-				int multiplier = ((Characteristic)(chNode.subject)).getMultiplier(solution);
+				double multiplier = ((Characteristic)(chNode.getSubject())).getMultiplier(solution);
 				connectCharacteristicToSolution(chNode, sNode, multiplier);
 			}
 		}
@@ -179,8 +179,8 @@ public class ContextGraph {
 	/** 
 	 *Creates an edge between a characteristic node (chNode) and a solution node (sNode) with multiplier m
 	 */
-	private void connectCharacteristicToSolution(Node chNode, Node sNode, int m) {
-		Edge edge = new Edge(chNode, sNode, 0.0, m); // creates edge
+	private void connectCharacteristicToSolution(Node chNode, Node sNode, double multiplier) {
+		Edge edge = new Edge(chNode, sNode, 0.0, multiplier); // creates edge
 		chNode.addEdgeFromNode(edge); // adds edge to characteristic node's edge list
 		sNode.addEdgeToNode(edge); // adds edge to solution node's edge list
 	}
@@ -232,7 +232,7 @@ public class ContextGraph {
 	public Solution getTopSolution() {
 		Collections.sort(solutionNodes);
 		
-		return (Solution)solutionNodes.get(0).subject;
+		return (Solution)solutionNodes.get(0).getSubject();
 	}
 	
 	// returns array of all solutions, sorted by weight (does not return weight)
@@ -242,13 +242,84 @@ public class ContextGraph {
 		Solution[] topSolutions = new Solution[solutionNodes.size()];
 		
 		for (int i = 0; i < topSolutions.length; i++) {
-			topSolutions[i] = (Solution)solutionNodes.get(i).subject;
+			topSolutions[i] = (Solution)solutionNodes.get(i).getSubject();
 		}
 		
 		return topSolutions;
 	}
+	/*
+	Set a node to be enabled or disabled (Works for Characteristics)
+	*/
+	public boolean checkNodeEnabled(Characteristic ch) {
+		return getCharacteristicNode(ch).isEnabled();
+	}
+	public boolean checkNodeEnabled(Solution s) {
+		return getSolutionNode(s).isEnabled();
+	}
 	
+	public boolean checkEdgesEnabled(Characteristic ch, Solution s) {
+		Node parent_node = getCharacteristicNode(ch);
+		Node child_node = getSolutionNode(s);
+		
+		PriorityQueue<Edge> edges = parent_node.getEdgesFromNode();
+		/*
+		for each edge e in edges, if e.endNode == childNode
+			return e.isEnabled
+		*/
+		
+		// Creating an iterator 
+        Iterator value = edges.iterator(); 
+  
+        // Displaying the values after iterating through the queue 
+        System.out.println("The iterator values are: "); 
+        while (value.hasNext()) { 
+        	Edge e = (Edge) value.next();
+            System.out.println(e.toString()); 
+            if (((Edge) e).getEndNode().equals(child_node)) {
+            	return e.isEnabled();
+            }
+        }
+        return false; //If it does not find an edge between the characteristics and solutions
+	}
 	
+	//Ability to enable/disable a characteristic node
+	public void setNodeEnabled(Characteristic ch, boolean enabled) {
+		getCharacteristicNode(ch).setEnabled(enabled);
+		
+	}
+	
+	//Ability to enable/disable a solution node
+	public void setNodeEnabled(Solution s, boolean enabled) {
+		getSolutionNode(s).setEnabled(enabled);
+	}
+	
+	//Ability to enable/disable an edge
+	public void setEdgeEnabled(Characteristic ch, Solution s, boolean enabled) {
+		Node parent_node = getCharacteristicNode(ch);
+		Node child_node = getSolutionNode(s);
+		
+		PriorityQueue<Edge> edges = parent_node.getEdgesFromNode();
+	
+        Iterator value = edges.iterator(); 
+  
+        // Displaying the values after iterating through the queue 
+        System.out.println("The iterator values are: "); 
+        while (value.hasNext()) { 
+        	Edge e = (Edge) value.next();
+            System.out.println(e.toString()); 
+            if (((Edge) e).getEndNode().equals(child_node)) {
+            	 e.setEnabled(enabled);
+            }
+        }
+	}
+	
+	/*
+	 * Set a node to be enabled or disabled (Works for solutions)
+	 */
+	public boolean enableOrDisable(Solution s) {
+		return getSolutionNode(s).isEnabled();
+	}
+		
 	//%%%%%%%%%%%%%%%%
 	// Helper methods
 	//%%%%%%%%%%%%%%%%
@@ -269,8 +340,8 @@ public class ContextGraph {
 	 * 	Assumes that all characteristics are attached to center node
 	 */
 	private boolean characteristicInGraph(Characteristic ch) {
-		for (Edge e : centerNode.edgesFromNode) {
-			if (((Characteristic)(e.getEndNode().subject)).equals(ch)) {
+		for (Edge e : centerNode.getEdgesFromNode()) {
+			if (((Characteristic)(e.getEndNode().getSubject())).equals(ch)) {
 				return true;
 			}
 		}
@@ -307,7 +378,7 @@ public class ContextGraph {
 	private Node getCharacteristicNode(Characteristic ch) {
 		
 		for (Node n : characteristicNodes) {
-			if (((Characteristic)n.subject).equals(ch)) {
+			if (((Characteristic)n.getSubject()).equals(ch)) {
 				return n;
 			}
 		}
@@ -319,7 +390,7 @@ public class ContextGraph {
 	 */
 	private Node getSolutionNode(Solution s) {
 		for (Node node : solutionNodes) {
-			if (((Solution)node.subject).equals(s)) {
+			if (((Solution)node.getSubject()).equals(s)) {
 				return node;
 			}
 		}
@@ -340,22 +411,22 @@ public class ContextGraph {
 	 */
 	public boolean checkNodesConnected(Node n1, Node n2) {
 		
-		for (Edge e : n1.edgesFromNode) {
+		for (Edge e : n1.getEdgesFromNode()) {
 			if (e.getEndNode().equals(n2)) {
 				return true;
 			}
 		}
-		for (Edge e : n2.edgesFromNode) {
+		for (Edge e : n2.getEdgesFromNode()) {
 			if (e.getEndNode().equals(n1)) {
 				return true;
 			}
 		}
-		for (Edge e : n1.edgesToNode) {
+		for (Edge e : n1.getEdgesToNode()) {
 			if (e.getStartNode().equals(n2)) {
 				return true;
 			}
 		}
-		for (Edge e : n2.edgesToNode) {
+		for (Edge e : n2.getEdgesToNode()) {
 			if (e.getStartNode().equals(n1)) {
 				return true;
 			}
@@ -377,8 +448,8 @@ public class ContextGraph {
 		
 		StringBuilder s = new StringBuilder();
 		
-		s.append("Center node:\t[centerNode, weight : edgeWeightIn*multiplier=edgeWeightOut : characteristic, weight]\n");
-		for (Edge e : centerNode.edgesFromNode) {
+		s.append("Center node:\t[centerNode, weight : edgeWeightIn*multiplier=edgeWeightOut, enabled : characteristic, weight, enabled]\n");
+		for (Edge e : centerNode.getEdgesFromNode()) {
 			s.append("\t[");
 			s.append(centerNode.getSubjectName());
 			s.append(", ");
@@ -389,27 +460,35 @@ public class ContextGraph {
 			s.append(e.getMultiplier());
 			s.append("=");
 			s.append(e.getWeightOut());
+			s.append(", ");
+			s.append(e.isEnabled());
 			s.append(" : ");
 			s.append(e.getEndNode().getSubjectName());
 			s.append(", ");
 			s.append(e.getEndNode().getWeight());
+			s.append(", ");
+			s.append(e.getEndNode().isEnabled());
 			s.append("]\n");
 		}
 		
-		s.append("\nCharacteristic nodes:\t[characteristicNode, weight; solutionNode1, weight : edgeWeightIn*multiplier=edgeWeightOut; ...]\n");
+		s.append("\nCharacteristic nodes:\t[characteristicNode, weight, enabled; solutionNode1, weight, enabled : edgeWeightIn*multiplier=edgeWeightOut, enabled; ...]\n");
 		for (Node n : characteristicNodes) {
 
 			s.append("\t[");
 			s.append(n.getSubjectName());
 			s.append(", ");
 			s.append(n.getWeight());
+			s.append(", ");
+			s.append(n.isEnabled());
 			
-			for (Edge e : n.edgesFromNode) {
+			for (Edge e : n.getEdgesFromNode()) {
 				s.append("; ");
 				
 				s.append(e.getEndNode().getSubjectName());
 				s.append(", ");
 				s.append(e.getEndNode().getWeight());
+				s.append(", ");
+				s.append(e.getEndNode().isEnabled());
 				s.append(" : ");
 				
 				
@@ -418,25 +497,33 @@ public class ContextGraph {
 				s.append(e.getMultiplier());
 				s.append("=");
 				s.append(e.getWeightOut());
+				s.append(", ");
+				s.append(e.isEnabled());
+		
 			}
 			
 			s.append("]\n");
 		}
-		s.append("\nSolution nodes:\t[solutionNode, weight; characteristicNode1, weight : edgeWeightIn*multiplier=edgeWeightOut; ...]\n");
+		s.append("\nSolution nodes:\t[solutionNode, weight, enabled; characteristicNode1, weight, enabled : edgeWeightIn*multiplier=edgeWeightOut, enabled; ...]\n");
 		for (Node n : solutionNodes) {
 			
 			s.append("\t[");
 			s.append(n.getSubjectName());
 			s.append(", ");
 			s.append(n.getWeight());
+			s.append(", ");
+			s.append(n.isEnabled());
 			
-			for (Edge e : n.edgesToNode) {
+			for (Edge e : n.getEdgesToNode()) {
 				s.append("; ");
 				
 				s.append(e.getStartNode().getSubjectName());
 				s.append(", ");
 				s.append(e.getStartNode().getWeight());
+				s.append(", ");
+				s.append(e.isEnabled());
 				s.append(" : ");
+				
 				
 				
 				s.append(e.getWeightIn());
@@ -444,6 +531,9 @@ public class ContextGraph {
 				s.append(e.getMultiplier());
 				s.append("=");
 				s.append(e.getWeightOut());
+				s.append(", ");
+				s.append(e.isEnabled());
+			
 			}
 			
 			s.append("]\n");
