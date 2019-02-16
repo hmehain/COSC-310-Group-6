@@ -20,7 +20,7 @@ public class Characteristic extends Subject {
 
 
 	// gets multiplier for a given solution in the characteristicSolutions list
-	public int getMultiplier(Solution solution) {
+	public double getMultiplier(Solution solution) {
 		int i = getSolutionIndex(solution);
 		return characteristicSolutions.get(i).getMultiplier();
 	}
@@ -51,7 +51,7 @@ public class Characteristic extends Subject {
 	}
 	
 	// adds a solution+multiplier pair to the characteristicSolutions list
-	public void addSolution(Solution solution, int multiplier) {
+	public void addSolution(Solution solution, double multiplier) {
 		if (!solutionInCharacteristicSolutions(solution)) {
 			characteristicSolutions.add(new SolutionMultiplierPair(solution, multiplier));
 		}
