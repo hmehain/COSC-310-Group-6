@@ -8,6 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ConvoBot.MessageSimple;
+import ConvoBot.PrintMessage;
+import ConvoBot.Synonyms;
 
 public class SmallTalk extends Topic {
 
@@ -18,12 +20,11 @@ public class SmallTalk extends Topic {
 		// TODO Auto-generated method stub
 		input = input.toLowerCase();
 		String output = null;
-		Scanner in = new Scanner(System.in);
 
 		if (count == 0) { 
 			// User just passed through smalltalk and accepted getting asked more questions.
 			System.out.println(messages[count]);
-			input = in.nextLine();
+			input = PrintMessage.messageFromUser();
 			count++;
 			messageRules(input, count);
 			
@@ -65,7 +66,7 @@ public class SmallTalk extends Topic {
 			
 			// Set Occupation in the patient class somehow?
 			System.out.println(output);
-			input = in.nextLine();
+			input = PrintMessage.messageFromUser();
 			count++;
 			messageRules(input, count); // Calls the messageRules method again with an incremented count
 
@@ -76,7 +77,7 @@ public class SmallTalk extends Topic {
 			int age = Integer.parseInt(m1.group(2)); // So we can set age in the patient class
 			output = "Oh, you're " + m1.group(2) + ". Thanks you! " + messages[count];
 			System.out.println(output);
-			input = in.nextLine();
+			input = PrintMessage.messageFromUser();
 			count++;
 			messageRules(input, count);
 			
@@ -94,8 +95,8 @@ public class SmallTalk extends Topic {
 			femaleList.add("woman");
 			femaleList.add("chick");
 			
-			Synonyms male = new Synonyms(maleList);
-			Synonyms female = new Synonyms(femaleList);
+			//Synonyms male = new Synonyms(maleList);
+			//Synonyms female = new Synonyms(femaleList);
 			
 			//Case 1: I am a (man/woman) or (guy/girl)
 			Pattern p1 = Pattern.compile("(.*)(i am a)(.*)");
@@ -114,18 +115,18 @@ public class SmallTalk extends Topic {
 				gender = input;
 			}else {
 				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'Guy' or 'Girl'.";
-				input = in.nextLine();
+				input = PrintMessage.messageFromUser();
 				gender = input;
 			}
 			
-			if(male.isSynonym(gender)) {
+			if(maleList.contains(gender.toLowerCase())) {
 				// set gender in patient object, don't know how to change shit from different packages
 				output = "So you're a guy! " + messages[count];
-			}else if(female.isSynonym(gender)) {
+			}else if(femaleList.contains(gender.toLowerCase())) {
 				output = "So you're a girl! " + messages[count];
 			}else {
 				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'Guy' or 'Girl'.";
-				input = in.nextLine();
+				input = PrintMessage.messageFromUser();
 				gender = input;
 				output = "So you're a " + gender + "!" + messages[count];
 			}
