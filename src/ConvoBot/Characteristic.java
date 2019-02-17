@@ -18,6 +18,10 @@ public class Characteristic extends Subject {
 		characteristicSolutions = new ArrayList<>();
 	}
 
+	public ArrayList<String> getSynonymns() {
+		return this.synonyms;
+	}
+	
 
 	// gets multiplier for a given solution in the characteristicSolutions list
 	public double getMultiplier(Solution solution) {

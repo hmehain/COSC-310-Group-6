@@ -1,22 +1,19 @@
 package Topics;
 
-import java.util.Scanner;
+import ConvoBot.PrintMessage;
 
 public class Goodbye extends Topic {
 
-	String[] messages = {"Goodbye *"};
+	String[] messages = {"Goodbye 0"};
 
-	@Override
-	public void messageRules(String input) {
-		// TODO Auto-generated method stub
-		
-		// program will exit if the user types in goodbye thebo
-		input = input.toLowerCase();
-		String goodbye = "goodbye thebo";
-		if (input.contains(goodbye)) {
-			System.out.println(messages);
-			// close scanner, dont know how to do it from a different class.
-		}
+
+	public static void startTopic(String name) {
+		System.out.println("*******Starting Goodbye******");
+		if (name != null) 
+			PrintMessage.messageFromBot("Goodbye " + name);
+		else
+			PrintMessage.messageFromBot("Goodbye.");
+		currentTopic++;
 		
 	}
 	

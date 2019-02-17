@@ -6,10 +6,12 @@ public class Conversation {
 
 	Patient patient;
 	public static boolean startNextTopic = false;
+	ContextGraph contextGraph;
 
 	public Conversation() {
 		Patient p = new Patient();
 		Topic.currentTopic = 0;
+		contextGraph = new ContextGraph("characteristicsList.txt", "solutionsList.txt");
 		while (Topic.currentTopic < 5) {
 			//System.out.println("////current Topic: " + Topic.currentTopic);
 			switch (Topic.currentTopic) {
@@ -17,16 +19,18 @@ public class Conversation {
 				p.setName(Greetings.startTopic());
 				break;
 			case 1:
-				SmallTalk2.startTopic();
+				SmallTalk.startTopic(p.getName(), "null", 0);
 				break;
 			case 2:
-				Discussion2.startTopic();
+				Discussion d = new Discussion(contextGraph);
+				d.startTopic();
 				break;
 			case 3:
-				Advice2.startTopic();
+				Advice a = new Advice();
+				a.startTopic(contextGraph);
 				break;
 			case 4:
-				Goodbye2.startTopic(p.getName());
+				Goodbye.startTopic(p.getName());
 				break;
 			}
 
