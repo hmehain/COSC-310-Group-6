@@ -1,6 +1,12 @@
 package ConvoBot;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.PriorityQueue;
@@ -32,12 +38,15 @@ public class ContextGraph {
 	 * 	adds all characteristics in characteristicsList to graph
 	 * 		(order [solutions, then characteristics] less important than when reading initial file, should still be maintained)
 	 */
-	public ContextGraph(ArrayList<Characteristic> characteristicsList, ArrayList<Solution> solutionsList) {
+	public ContextGraph(String characteristicsFilename, String solutionsFilename) {
+		
+		// creates arrayLists for characteristics and solutions read from text file, to be sent to graph
+		this.characteristicsList = new ArrayList<>();
+		this.solutionsList = new ArrayList<>();
+		createLists(characteristicsFilename, solutionsFilename);
+		
 		// center node MUST be named "centerNode" (otherwise error with edge/node weights)
 		centerNode = new Node(new Subject("centerNode")); // node at center of graph, originally patient, change later?
-				
-		this.characteristicsList = characteristicsList;
-		this.solutionsList = solutionsList;
 			
 		characteristicNodes = new ArrayList<>();
 		solutionNodes = new ArrayList<>(); // needed to return solution at end
@@ -45,6 +54,72 @@ public class ContextGraph {
 		// adds all solutions and characteristics in list to graph
 		addListSolutions();
 		addListCharacteristics();
+	}
+	
+	/**
+	 * Reads potential solutions from file and populates solutionsList, then potential characteristics from file to characteristicsList
+	 * 	(order is important, solutions added to characteristics only when they exist in solutions list)
+	 * 
+	 * @param characteristicsFilename = name of file where characteristics list stored
+	 * 		all characteristics must be stored as "characteristic1;synonym1,synonym2;treatment1-m1,treatment2-m2,treatment3-m3;"
+	 * 			m1 = multiplier (stored as int)
+	 * 			only adds solutions already in solution list, searches by name
+	 * @param solutionsFilename = name of file where solutions list stored
+	 * 		all solutions stored as "treatment1;\ntreatment2;\n..."
+	 * 			based on simple solution class (name is only attribute)
+	 * @return true if no errors encountered
+	 */
+	private boolean createLists(String characteristicsFilename, String solutionsFilename) {
+		
+		try (BufferedReader cbr = new BufferedReader(new InputStreamReader(new FileInputStream(characteristicsFilename)));
+				BufferedReader sbr = new BufferedReader(new InputStreamReader(new FileInputStream(solutionsFilename)));) {
+		    
+			String line;
+		    
+		    while ((line = sbr.readLine()) != null) {
+		    	String[] sections = line.split(";");
+		    	
+		    	Solution s = new Solution(sections[0]);
+		    	solutionsList.add(s);
+		    }
+		    
+		    
+		    // bad run time, small data set assumed (for demo)
+		    while ((line = cbr.readLine()) != null) {
+		        String[] sections = line.split(";");
+		        
+		        // sections[0] is the name, sections[1] is the synonyms, and sections[2] is the patientSolutions
+		        String name = sections[0];
+		        
+		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));		        
+		        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
+		       
+		        Characteristic ch = new Characteristic(name, synonyms);
+		        
+		        for (String sm : solutions) {
+		        	int separaterIndex = sm.indexOf('-');
+		        	String solution = sm.substring(0, separaterIndex);
+		        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
+		        	
+		        	for (Solution s : solutionsList) {
+		        		if (solution.equals(s.getName())) {
+		        			ch.addSolution(s, multiplier);
+		        		}
+		        	}
+		        	
+		        }
+		        
+		        characteristicsList.add(ch);
+		    }
+		    
+		    return true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	
@@ -436,8 +511,13 @@ public class ContextGraph {
 		return false;
 	}
 	
+	public ArrayList<Characteristic> getCharacteristicsList(){
+		return characteristicsList;
+	}
 	
-	
+	public ArrayList<Solution> getSolutionsList() {
+		return solutionsList;
+	}
 	/**
 	 * Returns string containing all nodes and connections
 	 * 	returns centerNode and all connections to characteristic nodes, 

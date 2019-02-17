@@ -6,6 +6,7 @@ public class Conversation {
 
 	Patient patient;
 	public static boolean startNextTopic = false;
+	ContextGraph contextGraph;
 
 	public Conversation() {
 		Patient p = new Patient();
