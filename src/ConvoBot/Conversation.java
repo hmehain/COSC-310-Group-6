@@ -18,7 +18,7 @@ public class Conversation {
 				p.setName(Greetings.startTopic());
 				break;
 			case 1:
-				SmallTalk2.startTopic(p.getName(), null, 0);
+				SmallTalk2.startTopic(p.getName(), "null", 0);
 				break;
 			case 2:
 				Discussion2 d = new Discussion2();

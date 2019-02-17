@@ -12,8 +12,8 @@ public class SmallTalk2 extends Topic {
 	static String[] messages = { "Thank you! What do you do for work or school 0?", "And how old are you?",
 			"Are you male or female?", "Thank you 0! That's all I needed. How are you feeling today?" };
 
-	public static void startTopic(String name, String input, int count) { // I want to use recursion to keep track of
-																			// what output to use.
+	public static void startTopic(String name, String input, int count) {
+
 		PrintMessage.messageFromBot("**********Starting SmallTalk**********");
 
 		input = input.toLowerCase();
@@ -77,8 +77,10 @@ public class SmallTalk2 extends Topic {
 			Pattern p1 = Pattern.compile("(.*)(\\d+)(.*)"); // \d+ should mean one or more digits but its giving me an
 															// error.
 			Matcher m1 = p1.matcher(input);
-			int age = Integer.parseInt(m1.group(2)); // So we can set age in the patient class
-			output = "Oh, you're " + m1.group(2) + ". Thanks you! " + messages[count];
+			if (m1.find()) {
+				int age = Integer.parseInt(m1.group(2)); // So we can set age in the patient class
+				output = "Oh, you're " + m1.group(2) + ". Thank you! " + messages[count];
+			}
 			PrintMessage.messageFromBot(output);
 			input = in.nextLine();
 			count++;
