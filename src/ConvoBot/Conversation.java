@@ -25,13 +25,13 @@ public class Conversation {
 				Discussion d = new Discussion(contextGraph);
 				d.startTopic();
 				break;
-			case 3:
-				Advice a = new Advice();
-				a.startTopic(contextGraph);
-				break;
-			case 4:
-				Goodbye.startTopic(p.getName());
-				break;
+			//case 3:
+				//Advice a = new Advice();
+				//a.startTopic(contextGraph);
+				//break;
+		//	case 4:
+			//	Goodbye.startTopic(p.getName());
+				//break;
 			}
 
 		}

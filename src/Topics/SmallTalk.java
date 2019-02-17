@@ -45,26 +45,26 @@ public class SmallTalk extends Topic {
 			Matcher m3 = p3.matcher(input);
 
 			if (m1.find()) {
-				output = "You say you " + m1.group(3) + ". Thank you for telling me! " + messages[count];
-				String temp = m1.group(3);
-				String[] tempWords = temp.split(" ");
-				if (tempWords.length >= 3) {
-					String occupation = tempWords[2]; // it would be in the form of "am a blank" so the occupation
-														// should be the third word
-				} else {
-					String occupation = tempWords[tempWords.length - 1]; // assume its the last one if its less than
-																			// three words long.
+				if(m3.find()) {
+					output = "You say that you are a " + m3.group(3) + ". That sounds interesting. " + messages[count];
+					String occupation = m3.group(3);
+				}else {
+					output = "You say you " + m1.group(3) + ". Thank you for telling me! " + messages[count];
+					String temp = m1.group(3);
+					String[] tempWords = temp.split(" ");
+					if (tempWords.length >= 3) {
+						String occupation = tempWords[2]; // it would be in the form of "am a blank" so the occupation
+															// should be the third word
+					} else {
+						String occupation = tempWords[tempWords.length - 1]; // assume its the last one if its less than
+																				// three words long.
+					}
 				}
 
-			} else if (m2.find() || m3.find()) {// Grammatically the output of patterns two and three can be the same
-				output = "You say that you are a " + m2.group(3) + ". That sounds interesting." + messages[count];
-				String temp = m2.group(3);
-				String[] tempWords = temp.split(" ");
-				if (tempWords.length >= 3) {
-					String occupation = tempWords[2];
-				} else {
-					String occupation = tempWords[tempWords.length - 1];
-				}
+			} else if (m2.find()) {// Grammatically the output of patterns two and three can be the same
+				output = "You say that you are a" + m2.group(3) + ". That sounds interesting." + messages[count];
+				String occupation = m2.group(3);
+				
 			}
 
 			// Set Occupation in the patient class somehow?
@@ -92,7 +92,7 @@ public class SmallTalk extends Topic {
 
 			ArrayList<String> maleList = new ArrayList<String>();
 			maleList.add("male");
-			maleList.add("Guy");
+			maleList.add("guy");
 			maleList.add("dude");
 			maleList.add("man");
 
@@ -106,7 +106,7 @@ public class SmallTalk extends Topic {
 			// Synonyms female = new Synonyms(femaleList);
 
 			// Case 1: I am a (man/woman) or (guy/girl)
-			Pattern p1 = Pattern.compile("(.*)(i am a)(.*)");
+			Pattern p1 = Pattern.compile("(.*)(i[^'m] am a)(.*)");
 			Matcher m1 = p1.matcher(input);
 
 			// Case 2 : I'm a (guy/girl)/(male/female)
