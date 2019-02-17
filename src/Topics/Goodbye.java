@@ -2,7 +2,7 @@ package Topics;
 
 import ConvoBot.PrintMessage;
 
-public class Goodbye2 extends Topic {
+public class Goodbye extends Topic {
 
 	String[] messages = {"Goodbye 0"};
 

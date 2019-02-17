@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 import ConvoBot.PrintMessage;
 
-public class SmallTalk2 extends Topic {
+public class SmallTalk extends Topic {
 
 	static String[] messages = { "Thank you! What do you do for work or school 0?", "And how old are you?",
 			"Are you male or female?", "Thank you 0! That's all I needed. How are you feeling today?" };

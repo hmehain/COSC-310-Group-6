@@ -18,17 +18,17 @@ public class Conversation {
 				p.setName(Greetings.startTopic());
 				break;
 			case 1:
-				SmallTalk2.startTopic(p.getName(), "null", 0);
+				SmallTalk.startTopic(p.getName(), "null", 0);
 				break;
 			case 2:
-				Discussion2 d = new Discussion2();
+				Discussion d = new Discussion();
 				d.startTopic();
 				break;
 			case 3:
-				Advice2.startTopic();
+				Advice.startTopic();
 				break;
 			case 4:
-				Goodbye2.startTopic(p.getName());
+				Goodbye.startTopic(p.getName());
 				break;
 			}
 

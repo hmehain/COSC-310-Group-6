@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 import ConvoBot.PrintMessage;
 
-public class Discussion2 extends Topic {
+public class Discussion extends Topic {
 
 	String[] sampleMessages = {"That’s too bad! Do you like being busy?",
 			"Can you do anything to have more free time? Good time management skills can often free up leisure time!",
@@ -27,7 +27,7 @@ public class Discussion2 extends Topic {
 			"That's very interesting",
 			"I see."};
 
-	public Discussion2() {
+	public Discussion() {
 		conversationRounds = 0;	
 		messages = new ArrayList<String>();
 	}
@@ -58,7 +58,7 @@ public class Discussion2 extends Topic {
 		Pattern p3 = Pattern.compile("(.*)(my)(.*)");
 		Matcher m3 = p3.matcher(input);
 		if (m1.find()) 
-			output = "You say you" + m1.group(3) + ".";
+			output = "You say you " + m1.group(3) + ".";
 		if (m2.find()) 
 			output = "Who in particular are you thinking of?";
 		if (m3.lookingAt()) {
