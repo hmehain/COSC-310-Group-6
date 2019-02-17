@@ -4,6 +4,7 @@ public class Patient {
 	
 	private int age;
 	private String name;
+	private String occupation;
 	
 
 	public int getAge() {
@@ -25,6 +26,8 @@ public class Patient {
 		this.name = name;
 	}
 	
-	
+	public void setOccupation(String occupation) {
+		this.occupation = occupation;
+	}
 	
 }

@@ -16,7 +16,6 @@ public class SmallTalk extends Topic {
 
 	public void messageRules(String input, int count) { // I want to use recursion to keep track of what output to use.
 		// TODO Auto-generated method stub
-		int count = count;
 		input = input.toLowerCase();
 		String output = null;
 		Scanner in = new Scanner(System.in);
@@ -47,9 +46,9 @@ public class SmallTalk extends Topic {
 				String temp = m1.group(3);
 				String[] tempWords = temp.split(" ");
 				if(tempWords.length >= 3) {
-					String occupation = tempWords(2); // it would be in the form of "am a blank" so the occupation should be the third word
+					String occupation = tempWords[2]; // it would be in the form of "am a blank" so the occupation should be the third word
 				}else {
-					String occupation = tempWords(tempWords.length - 1); // assume its the last one if its less than three words long.
+					String occupation = tempWords[tempWords.length - 1]; // assume its the last one if its less than three words long.
 				}
 				
 			}
@@ -58,9 +57,9 @@ public class SmallTalk extends Topic {
 				String temp = m2.group(3);
 				String[] tempWords = temp.split(" ");
 				if(tempWords.length >= 3) {
-					String occupation = tempWords(2);
+					String occupation = tempWords[2];
 				}else {
-					String occupation = tempWords(tempWords.length - 1);
+					String occupation = tempWords[tempWords.length - 1];
 				}
 			}
 			
@@ -72,9 +71,9 @@ public class SmallTalk extends Topic {
 
 		} else if (count == 2) { // Get users age. Assume the user responds using integers
 			
-			Pattern p1 = Pattern.compile("(.*)(\d+)(.*)"); // \d+ should mean one or more digits but its giving me an error.
+			Pattern p1 = Pattern.compile("(.*)(\\d+)(.*)"); // \d+ should mean one or more digits but its giving me an error.
 			Matcher m1 = p1.matcher(input);
-			int age = m1.group(2); // So we can set age in the patient class
+			int age = Integer.parseInt(m1.group(2)); // So we can set age in the patient class
 			output = "Oh, you're " + m1.group(2) + ". Thanks you! " + messages[count];
 			System.out.println(output);
 			input = in.nextLine();
@@ -90,39 +89,45 @@ public class SmallTalk extends Topic {
 			maleList.add("man");
 			
 			ArrayList<String> femaleList = new ArrayList<String>();
-			female.add("female");
-			female.add("girl");
-			female.add("woman");
-			female.add("chick");
+			femaleList.add("female");
+			femaleList.add("girl");
+			femaleList.add("woman");
+			femaleList.add("chick");
 			
 			Synonyms male = new Synonyms(maleList);
 			Synonyms female = new Synonyms(femaleList);
 			
 			//Case 1: I am a (man/woman) or (guy/girl)
 			Pattern p1 = Pattern.compile("(.*)(i am a)(.*)");
-			Matcher m1 = p3.matcher(input);
+			Matcher m1 = p1.matcher(input);
 			
 			//Case 2 : I'm a (guy/girl)/(male/female)
 			Pattern p2 = Pattern.compile("(.*)(i'm a)(.*)");
 			Matcher m2 = p2.matcher(input);
 			
-			//Case 3: only responds with male/female/guy/girl I can just have this handled in the else section
+			//Case 3: only responds with male/female/guy/girl
 			String[] words = input.split(" ");
-			
+			String gender = null;
 			if(m1.find() || m2.find()) {
-				String gender = m1.group(3);
-			}else if(words.length == 1) {
-				String gender = input;
+				gender = m1.group(3);
+			}else if(words.length == 1) { // If its only a one word response assume the word is the gender.
+				gender = input;
+			}else {
+				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'Guy' or 'Girl'.";
+				input = in.nextLine();
+				gender = input;
 			}
 			
 			if(male.isSynonym(gender)) {
 				// set gender in patient object, don't know how to change shit from different packages
-				String output = "So you're a guy! " + message[count];
+				output = "So you're a guy! " + messages[count];
 			}else if(female.isSynonym(gender)) {
-				String output = "So you're a girl! " + message[count];
+				output = "So you're a girl! " + messages[count];
 			}else {
-				String output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a ""Guy"" or ""Girl"".";
+				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'Guy' or 'Girl'.";
 				input = in.nextLine();
+				gender = input;
+				output = "So you're a " + gender + "!" + messages[count];
 			}
 			
 			System.out.println(output);
