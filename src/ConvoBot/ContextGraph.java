@@ -43,6 +43,7 @@ public class ContextGraph {
 		// creates arrayLists for characteristics and solutions read from text file, to be sent to graph
 		this.characteristicsList = new ArrayList<>();
 		this.solutionsList = new ArrayList<>();
+		
 		createLists(characteristicsFilename, solutionsFilename);
 		
 		// center node MUST be named "centerNode" (otherwise error with edge/node weights)
@@ -91,24 +92,27 @@ public class ContextGraph {
 		        // sections[0] is the name, sections[1] is the synonyms, and sections[2] is the patientSolutions
 		        String name = sections[0];
 		        
-		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));		        
-		        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
-		       
+		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));
 		        Characteristic ch = new Characteristic(name, synonyms);
 		        
-		        for (String sm : solutions) {
-		        	int separaterIndex = sm.indexOf('-');
-		        	String solution = sm.substring(0, separaterIndex);
-		        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
-		        	
-		        	for (Solution s : solutionsList) {
-		        		if (solution.equals(s.getName())) {
-		        			ch.addSolution(s, multiplier);
-		        		}
-		        	}
-		        	
+		        if (sections.length > 2) {
+			        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
+			       
+			        
+			        
+			        for (String sm : solutions) {
+			        	int separaterIndex = sm.indexOf('-');
+			        	String solution = sm.substring(0, separaterIndex);
+			        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
+			        	
+			        	for (Solution s : solutionsList) {
+			        		if (solution.equals(s.getName())) {
+			        			ch.addSolution(s, multiplier);
+			        		}
+			        	}
+			        	
+			        }
 		        }
-		        
 		        characteristicsList.add(ch);
 		    }
 		    
