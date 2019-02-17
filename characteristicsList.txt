@@ -1,5 +1,6 @@
-characteristic1;synonym1,synonym2;treatment1-1.0,treatment2-7.0,treatment3-4.0;
-characteristic2;synonym3,synonym4,synonym5;treatment2-7.0,faketreatment1-6.0,treatment4-2.0;
-characteristic3;synonym6;treatment1-3.0,treatment4-5.0,treatment6-2.0;
-characteristic4;synonym7,synonym8;faketreatment2-3.0,faketreatment3-2.0,faketreatment4-9.0;
-characteristic5;synonym9,synonym10,synonym11;treatment2-1.0,treatment7-4.0,faketreatment5-2.0;
+characteristic1;synonym1,synonym2;treatment1-1.5,treatment2-1.0,treatment3-8.1;
+characteristic2;synonym3,synonym4,synonym5;treatment1-2.0,faketreatment1-6.0,treatment4-5.0;
+characteristic3;synonym6;treatment3-0.3,treatment6-1.0;
+characteristic4;synonym7,synonym8;treatment6-1.0,faketreatment2-3.0,faketreatment3-2.0,faketreatment4-9.0;
+characteristic5;synonym9,synonym10,synonym11;treatment8-8.1,treatment9-5.8,treatment10-3.0;
+characteristic6;synonym12;;

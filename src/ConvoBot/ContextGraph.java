@@ -43,6 +43,7 @@ public class ContextGraph {
 		// creates arrayLists for characteristics and solutions read from text file, to be sent to graph
 		this.characteristicsList = new ArrayList<>();
 		this.solutionsList = new ArrayList<>();
+		
 		createLists(characteristicsFilename, solutionsFilename);
 		
 		// center node MUST be named "centerNode" (otherwise error with edge/node weights)
@@ -91,24 +92,27 @@ public class ContextGraph {
 		        // sections[0] is the name, sections[1] is the synonyms, and sections[2] is the patientSolutions
 		        String name = sections[0];
 		        
-		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));		        
-		        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
-		       
+		        ArrayList<String> synonyms = new ArrayList<String>(Arrays.asList(sections[1].split(",")));
 		        Characteristic ch = new Characteristic(name, synonyms);
 		        
-		        for (String sm : solutions) {
-		        	int separaterIndex = sm.indexOf('-');
-		        	String solution = sm.substring(0, separaterIndex);
-		        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
-		        	
-		        	for (Solution s : solutionsList) {
-		        		if (solution.equals(s.getName())) {
-		        			ch.addSolution(s, multiplier);
-		        		}
-		        	}
-		        	
+		        if (sections.length > 2) {
+			        ArrayList<String> solutions = new ArrayList<String>(Arrays.asList(sections[2].split(",")));
+			       
+			        
+			        
+			        for (String sm : solutions) {
+			        	int separaterIndex = sm.indexOf('-');
+			        	String solution = sm.substring(0, separaterIndex);
+			        	double multiplier = Double.parseDouble(sm.substring(separaterIndex + 1));
+			        	
+			        	for (Solution s : solutionsList) {
+			        		if (solution.equals(s.getName())) {
+			        			ch.addSolution(s, multiplier);
+			        		}
+			        	}
+			        	
+			        }
 		        }
-		        
 		        characteristicsList.add(ch);
 		    }
 		    
@@ -378,10 +382,10 @@ public class ContextGraph {
         Iterator value = edges.iterator(); 
   
         // Displaying the values after iterating through the queue 
-        System.out.println("The iterator values are: "); 
+        //System.out.println("The iterator values are: "); 
         while (value.hasNext()) { 
         	Edge e = (Edge) value.next();
-            System.out.println(e.toString()); 
+            //System.out.println(e.toString()); 
             if (((Edge) e).getEndNode().equals(child_node)) {
             	 e.setEnabled(enabled);
             }
@@ -541,13 +545,14 @@ public class ContextGraph {
 			s.append("=");
 			s.append(e.getWeightOut());
 			s.append(", ");
-			s.append(e.isEnabled());
+			s.append((e.isEnabled() ? "edge enabled" : "edge disabled"));
 			s.append(" : ");
 			s.append(e.getEndNode().getSubjectName());
 			s.append(", ");
 			s.append(e.getEndNode().getWeight());
 			s.append(", ");
-			s.append(e.getEndNode().isEnabled());
+			s.append(e.getEndNode().isEnabled() ? "node enabled" : "node disabled");
+			//s.append(e.getEndNode().isEnabled());
 			s.append("]\n");
 		}
 		
@@ -559,7 +564,8 @@ public class ContextGraph {
 			s.append(", ");
 			s.append(n.getWeight());
 			s.append(", ");
-			s.append(n.isEnabled());
+			s.append(n.isEnabled() ? "node enabled" : "node disabled");
+			//s.append(n.isEnabled());
 			
 			for (Edge e : n.getEdgesFromNode()) {
 				s.append("; ");
@@ -568,7 +574,8 @@ public class ContextGraph {
 				s.append(", ");
 				s.append(e.getEndNode().getWeight());
 				s.append(", ");
-				s.append(e.getEndNode().isEnabled());
+				s.append(e.getEndNode().isEnabled() ? "node enabled" : "node disabled");
+				//s.append(e.getEndNode().isEnabled());
 				s.append(" : ");
 				
 				
@@ -578,7 +585,8 @@ public class ContextGraph {
 				s.append("=");
 				s.append(e.getWeightOut());
 				s.append(", ");
-				s.append(e.isEnabled());
+				s.append(e.isEnabled() ? "edge enabled" : "edge disabled");
+				//s.append(e.isEnabled());
 		
 			}
 			
@@ -592,7 +600,8 @@ public class ContextGraph {
 			s.append(", ");
 			s.append(n.getWeight());
 			s.append(", ");
-			s.append(n.isEnabled());
+			s.append(n.isEnabled() ? "node enabled" : "node disabled");
+			//s.append(n.isEnabled());
 			
 			for (Edge e : n.getEdgesToNode()) {
 				s.append("; ");
@@ -601,7 +610,7 @@ public class ContextGraph {
 				s.append(", ");
 				s.append(e.getStartNode().getWeight());
 				s.append(", ");
-				s.append(e.isEnabled());
+				s.append(e.getStartNode().isEnabled() ? "node enabled" : "node disabled");
 				s.append(" : ");
 				
 				
@@ -612,8 +621,8 @@ public class ContextGraph {
 				s.append("=");
 				s.append(e.getWeightOut());
 				s.append(", ");
-				s.append(e.isEnabled());
-			
+				//s.append(e.isEnabled());
+				s.append(e.isEnabled() ? "edge enabled" : "edge disabled");
 			}
 			
 			s.append("]\n");

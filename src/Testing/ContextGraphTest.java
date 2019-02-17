@@ -38,31 +38,59 @@ public class ContextGraphTest{
 		ArrayList<Solution> solutionsList = g.getSolutionsList();
 		
 		// prints string representation of graph
-		System.out.print("\n\n" + g.toString());
+		System.out.print("\n" + g.toString());
+		
+		System.out.println("\n\nTest incrementing nodes");
 		
 		// increments characteristic
-		g.incrementCharacteristic(characteristicsList.get(4));
-		g.incrementCharacteristic(characteristicsList.get(2), 2.0);
-		g.incrementCharacteristic(characteristicsList.get(0), 5);
+		g.incrementCharacteristic(characteristicsList.get(0), 6);
+		g.incrementCharacteristic(characteristicsList.get(1));
+		g.incrementCharacteristic(characteristicsList.get(2), 7.1);
+		g.incrementCharacteristic(characteristicsList.get(3), 2.9);
+		g.incrementCharacteristic(characteristicsList.get(4), 8);
 		
-		System.out.print("\n\n" + g.toString());
+		System.out.print("\n" + g.toString());
 		
+		// gets top solution from graph (solution with highest weight)
+		Solution topSolution = g.getTopSolution();
+		System.out.println("\nReturned solution: " + topSolution.toString());
+			
+		// gets array of all solutions sorted by weight (highest - lowest)
+		Solution[] topSolutions = g.getTopSolutionsArray();
+			
+		System.out.println("Top solutions");
+		for (Solution s : topSolutions) {
+			System.out.println("\t" + s.toString());
+		}
+		
+		
+		
+		
+		System.out.println("\n\nTest enabling/disabling nodes and edges");
+		System.out.println("Characteristic nodes 2 and 5 disabled, solution nodes 2, 9, and 10 disabled");
+		System.out.println("edges ch1->s2, ch5->s8, ch5->s10 disabled");
+		
+		g.setNodeEnabled(characteristicsList.get(1), false);
 		g.setNodeEnabled(characteristicsList.get(4), false);
-		g.setEdgeEnabled(characteristicsList.get(2), solutionsList.get(3), true);
-		g.setNodeEnabled(characteristicsList.get(0), false);
-		g.setEdgeEnabled(characteristicsList.get(1), solutionsList.get(3), false);
-		g.setNodeEnabled(solutionsList.get(2), false);
+		
+		g.setNodeEnabled(solutionsList.get(1), false);
+		g.setNodeEnabled(solutionsList.get(8), false);
+		g.setNodeEnabled(solutionsList.get(9), false);
+		
+		g.setEdgeEnabled(characteristicsList.get(0), solutionsList.get(2), false);
+		g.setEdgeEnabled(characteristicsList.get(4), solutionsList.get(7), false);
+		g.setEdgeEnabled(characteristicsList.get(4), solutionsList.get(9), false);
 		
 		System.out.print("\n\n" + g.toString());
 		
 		
 		
 		// gets top solution from graph (solution with highest weight)
-		Solution topSolution = g.getTopSolution();
+		topSolution = g.getTopSolution();
 		System.out.println("\nReturned solution: " + topSolution.toString());
 		
 		// gets array of all solutions sorted by weight (highest - lowest)
-		Solution[] topSolutions = g.getTopSolutionsArray();
+		topSolutions = g.getTopSolutionsArray();
 		
 		System.out.println("Top solutions");
 		for (Solution s : topSolutions) {

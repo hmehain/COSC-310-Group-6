@@ -20,6 +20,8 @@ public class Edge implements Comparable<Edge> {
 		// if setEnabled == true, update edge weights 
 		this.enabled = enabled;
 		
+		this.updateEdgeWeight();
+		
 		/*
 		if (this.enabled == true) {
 			updateEdgeWeight();
@@ -68,16 +70,16 @@ public class Edge implements Comparable<Edge> {
 	
 	public void updateEdgeWeight() {
 		// if node == disabled, weightIn = 0
-		/*
-		if (startNode.isEnabled() == false) {
-			startNode.setWeight(0.0);
-		}
-		else {
+		
+		if (this.isEnabled() == false || startNode.isEnabled() == false) {
+			//startNode.setWeight(0.0);
+			setWeightIn(0.0);
+		} else {
 			setWeightIn(startNode.getWeight());
 		}
 		
-		*/
-		setWeightIn(startNode.getWeight());
+		
+		//setWeightIn(startNode.getWeight());
 		setWeightOut(this.weightIn * this.multiplier);
 		;
 		if (!endNode.getSubjectName().equals("centerNode")) {
