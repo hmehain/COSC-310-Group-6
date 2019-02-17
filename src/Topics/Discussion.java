@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ConvoBot.Characteristic;
+import ConvoBot.ContextGraph;
 import ConvoBot.PrintMessage;
 
 public class Discussion extends Topic {
@@ -26,8 +28,10 @@ public class Discussion extends Topic {
 	public static String[] noMessages = {"Please go on.",
 			"That's very interesting",
 			"I see."};
+	ContextGraph contextGraph;
 
-	public Discussion() {
+	public Discussion(ContextGraph contextGraph) {
+		this.contextGraph = contextGraph;
 		conversationRounds = 0;	
 		messages = new ArrayList<String>();
 	}
@@ -49,7 +53,7 @@ public class Discussion extends Topic {
 	 * @return The bot response
 	 */
 	public String discussionRules(String input) {
-		
+		extractKeywords(input);
 		String output = null;
 		Pattern p1 = Pattern.compile("(.*)(I[^'m])(.*)");
 		Matcher m1 = p1.matcher(input);
@@ -76,9 +80,17 @@ public class Discussion extends Topic {
 	
 	}
 	
-	public String extractKeywords(String input) {
-		
-		return null;
+	public void extractKeywords(String input) {
+		for (Characteristic c: contextGraph.getCharacteristicsList()) {
+			if (input.contains(c.getName())) {
+				// What method do we use when we find a keyword or synonym in the patient message?
+			}
+			for(String s: c.getSynonymns()) {
+				if (input.contains(s)) {
+					// Same as before 
+				}
+			}
+		}
 	}
 
 }
