@@ -63,6 +63,7 @@ public class SmallTalk extends Topic {
 					} else {
 						String occupation = tempWords[tempWords.length - 1]; // assume its the last one if its less than
 																				// three words long.
+						output = "You say you are a  " + occupation + ". Thank you for telling me! " + messages[count];
 					}
 				}
 
@@ -70,6 +71,8 @@ public class SmallTalk extends Topic {
 				output = "You say that you are a" + m2.group(3) + ". That sounds interesting. " + messages[count];
 				String occupation = m2.group(3);
 				
+			}else {
+				output = "You say you are a  " + input + ". Thank you for telling me! " + messages[count];
 			}
 
 			// Set Occupation in the patient class somehow?
