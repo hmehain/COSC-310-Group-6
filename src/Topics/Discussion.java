@@ -103,12 +103,13 @@ public class Discussion extends Topic {
 		Pattern p3 = Pattern.compile("(.*)(my)(.*)");
 		Matcher m3 = p3.matcher(input);
 		
-		// Case 4: User responds with everybody
-		Pattern p4 = Pattern.compile("(.*)(everybody)(.*)");
+		// Case 4: User responds with yes
+		Pattern p4 = Pattern.compile("(.*)(yes)(.*)");
 		Matcher m4 = p4.matcher(input);
 		
-		// Case 5: Single word response
-		int inputLength = input.split(" ").length;
+		// Case 5: User responds with no
+		Pattern p5 = Pattern.compile("(.*)(no)(.*)");
+		Matcher m5 = p4.matcher(input);
 		
 		if(m1.find()) {
 			System.out.println("Case 1");
@@ -188,6 +189,7 @@ public class Discussion extends Topic {
 			if(m2_1.matches()) {
 				System.out.println("Case 2.1");
 				keyword = m2_1.group(3);
+				keyword = keyword.replaceAll("\\s+","");
 				if(happyList.contains(keyword.toLowerCase())) {
 					output = "I'm glad to hear that you're feeling good!";
 					//Change graph weight
@@ -200,11 +202,13 @@ public class Discussion extends Topic {
 			}else if(m2_2.matches()) {
 				System.out.println("Case 2.2");
 				keyword = m2_2.group(3); // worried implies this will be negative so I dont need to check the synonyms
+				keyword = keyword.replaceAll("\\s+","");
 				output = "Why are you worried about " + keyword + "?";
 				//Change graph weights
 			}else {
 				System.out.println("Case 2.3");
 				keyword = m2.group(3);
+				keyword = keyword.replaceAll("\\s+","");
 				if(happyList.contains(keyword.toLowerCase())) {
 					output = "I'm glad to hear that you're" + keyword + "! Keep it up by getting into healthy habits. ";
 					//Change graph weight
