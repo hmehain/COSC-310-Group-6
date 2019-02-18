@@ -1,12 +1,18 @@
 package Topics;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.*;
+import org.apache.commons.lang3.ArrayUtils;
+
+import java.lang.reflect.Array;
 
 import ConvoBot.Characteristic;
 import ConvoBot.ContextGraph;
 import ConvoBot.PrintMessage;
+import ConvoBot.Synonyms;
 
 public class Discussion extends Topic {
 
@@ -54,10 +60,81 @@ public class Discussion extends Topic {
 	 */
 	public String discussionRules(String input) {
 		extractKeywords(input);
+		input = input.toLowerCase();
 		String output = null;
-		Pattern p1 = Pattern.compile("(.*)(I[^'m])(.*)");
+		
+		
+		// Case 1: User responds with I
+		Pattern p1 = Pattern.compile("(.*)(i[^'m])(.*)");
 		Matcher m1 = p1.matcher(input);
-		Pattern p2 = Pattern.compile("(.*)(everybody)(.*)");
+		
+		if(m1.find()) {
+			
+			//Case 1.1: I am
+			Pattern p1_1 = Pattern.compile("(.*)(i am)(.*)");
+			Matcher m1_1 = p1_1.matcher(input);
+			if(m1_1.find()) {
+				// Case 1.1.1: I am feeling BLANK
+				Pattern p1_1_1 = Pattern.compile("(.*)(feeling)(.*)");
+				Matcher m1_1_1 = p1_1_1.matcher(input);
+				
+				if(m1_1_1.find()) {
+					String keyword = m1_1_1.group(3);
+					// Check synonyms for keyword
+					
+					if(/*isHappy(keyword)*/) {
+						output = "I'm glad to hear that you're feeling good!";
+						//Change graph weight
+					}else if(/*isSad(keyword)*/) {
+						//Change graph weights
+						output = "I'm sorry to hear that.";
+					}
+					
+					// Case 1.1.2 I am BLANK. EX I am worried/sad
+				}else {
+					String keyword = m1_1.group(3);
+					if(/*isHappy(keyword)*/) {
+						output = "I'm glad to hear that you're feeling good!";
+						//Change graph weight
+					}else if(/*isSad(keyword)*/) {
+						//Change graph weights
+						output = "I'm sorry to hear that.";
+					}
+				}
+			}else { //Case 1.2: I BLANK. EX I hate BLANK, I love BLANK, I procrastinate, ECT
+				String[] words = m1.group(3).split(" "); // Splits the String into individual words
+				String keyword = words[0];
+				String sentence = null;
+				if(words.length > 1) {
+					words = ArrayUtils.removeElement(words, 0); // Removes the keyword from the sentence
+					sentence = Arrays.toString(words); // Recombines into a partial sentence
+				}else {
+					sentence = keyword;
+				}
+				
+				if(/*isPositve(keyword)*/) {
+					output = "Its good to hear that you like " + sentence + ". " + "How does " + sentence + " make you feel?";
+				}else if(/*isNegative(keyword)*/) {
+					output = "I'm sorry to hear that " + sentence + " makes you feel like that. Why do you think it makes you feel that way?";
+				}else if(keyword.equals("proctastinate")) {
+					output = sampleMessages[2];
+				}else {
+					output = noMessages[(int) (Math.random()*noMessages.length)];
+				}
+				
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+/*		Pattern p2 = Pattern.compile("(.*)(everybody)(.*)");
 		Matcher m2 = p2.matcher(input);
 		Pattern p3 = Pattern.compile("(.*)(my)(.*)");
 		Matcher m3 = p3.matcher(input);
@@ -74,7 +151,7 @@ public class Discussion extends Topic {
 				messages.add(saying);
 		}
 		if (output == null)
-			output = noMessages[(int) (Math.random()*noMessages.length)];
+			output = noMessages[(int) (Math.random()*noMessages.length)];*/
 		
 		return output;
 	

@@ -5,12 +5,17 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ConvoBot.Conversation;
+import ConvoBot.Patient;
 import ConvoBot.PrintMessage;
 
 public class SmallTalk extends Topic {
 
-	static String[] messages = { "Thank you! What do you do for work or school 0?", "And how old are you?",
-			"Are you male or female?", "Thank you 0! That's all I needed. How are you feeling today?" };
+	static String[] messages = { "Thank you! What do you do for work or school?", "And how old are you?",
+			"Are you male or female?", "Thank you! That's all I needed. How are you feeling today?" };
+	
+	public static int age;
+	String gender = null;
 
 	public static void startTopic(String name, String input, int count) {
 
@@ -62,7 +67,7 @@ public class SmallTalk extends Topic {
 				}
 
 			} else if (m2.find()) {// Grammatically the output of patterns two and three can be the same
-				output = "You say that you are a" + m2.group(3) + ". That sounds interesting." + messages[count];
+				output = "You say that you are a" + m2.group(3) + ". That sounds interesting. " + messages[count];
 				String occupation = m2.group(3);
 				
 			}
@@ -79,8 +84,13 @@ public class SmallTalk extends Topic {
 			Pattern p1 = Pattern.compile("(.*)(\\d+\\d+)(.*)"); // This is only outputting the last digit.
 			Matcher m1 = p1.matcher(input);
 			if (m1.find()) {
-				int age = Integer.parseInt(m1.group(2)); // So we can set age in the patient class
+				age = (Integer.parseInt(m1.group(2))); // So we can set age in the patient class
 				output = "So you're " + m1.group(2) + ". Thank you! " + messages[count];
+			}else {
+				System.out.println("I'm sorry I didn't catch that. Could you tell me your age using integers?");
+				input = in.nextLine();
+				age = Integer.parseInt(input);
+				output = "So you're " + age + ". Thank you! " + messages[count];
 			}
 			PrintMessage.messageFromBot(output);
 			input = in.nextLine();
@@ -151,5 +161,6 @@ public class SmallTalk extends Topic {
 		}
 
 	}
+	
 
 }

@@ -4,7 +4,7 @@ import Topics.*;
 
 public class Conversation {
 
-	Patient patient;
+	public Patient patient;
 	public static boolean startNextTopic = false;
 	ContextGraph contextGraph;
 
