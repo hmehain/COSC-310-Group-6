@@ -29,7 +29,7 @@ public class Conversation {
 				//Advice a = new Advice();
 				//a.startTopic(contextGraph);
 				//break;
-		//	case 4:
+			//case 4:
 			//	Goodbye.startTopic(p.getName());
 				//break;
 			}
