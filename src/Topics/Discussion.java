@@ -68,6 +68,21 @@ public class Discussion extends Topic {
 		Pattern p1 = Pattern.compile("(.*)(i[^'m])(.*)");
 		Matcher m1 = p1.matcher(input);
 		
+		// Case 2: User responds with I'm
+		Pattern p2 = Pattern.compile("(.*)(i'm)(.*)");
+		Matcher m2 = p2.matcher(input);
+		
+		// Case 3: user responds with my
+		Pattern p3 = Pattern.compile("(.*)(my)(.*)");
+		Matcher m3 = p3.matcher(input);
+		
+		// Case 4: User responds with everybody
+		Pattern p2 = Pattern.compile("(.*)(everybody)(.*)");
+		Matcher m2 = p2.matcher(input);
+		
+		// Case 5: Single word response
+		int inputLength = input.split(" ").length;
+		
 		if(m1.find()) {
 			
 			//Case 1.1: I am
@@ -124,6 +139,21 @@ public class Discussion extends Topic {
 				
 			}
 			
+		}else if(m2.matches()) { // Case 2
+			// Case 2.1 I'm feeling BLANK
+			// Case 2.2 I'm worried about BLANK
+			// Case 2.3 I'm BLANK
+		}else if(/*Case 3 */) {
+			// Case 3.1: My job is BLANK
+			// Case 3.2: My friends 
+		}else if(/*Case 4*/) {
+			// Case 4.1: Everyone hates BLANK
+			// Case 4.2: Everyone Loves BLANK
+			// Case 4.3: Everyone says BLANK
+		}else if(inputLength == 1) {
+			// Check synonyms list
+		}else {
+			output = noMessages[(int) (Math.random()*noMessages.length)];
 		}
 		
 		
