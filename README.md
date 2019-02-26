@@ -34,11 +34,16 @@ Currently the bot runs in the console. Although we spent time on building an And
  4) Greetings - Starts the program and introduces Thebo.
  
  5) SmallTalk - Asks basic questions to get user info.
+<<<<<<< HEAD
   
 
+=======
+>>>>>>> branch 'master' of https://github.com/hmehain/COSC-310-Group-6.git
 
 # Class Structure
 
 ![UML diagram](https://github.com/hmehain/COSC-310-Group-6/blob/master/chatbot%20UML%202.jpg)
+
+[WBS](https://docs.google.com/spreadsheets/d/1r-X-w9h50yBHoTPS1j0cAH8LC9jF8CfqRzDWSvb3xO8/edit?usp=sharing)
 
 

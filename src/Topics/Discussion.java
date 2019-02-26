@@ -224,6 +224,7 @@ public class Discussion extends Topic {
 					Matcher m2_3_1 = p2_3_1.matcher(temp);
 					Pattern p2_3_2 = Pattern.compile("(.*+)(do)(.*+)");
 					Matcher m2_3_2 = p2_3_2.matcher(temp);
+					reader.close();
 					
 					if(m2_3_1.matches() || m2_3_2.matches()) {
 						output = "Good for you! Excercise has been proven to improve concentration, helps you sleep better,"
