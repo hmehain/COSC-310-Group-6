@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.Scanner;
 import org.apache.*;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -22,7 +23,7 @@ public class Discussion extends Topic {
 			"That's too bad, did it used to help?",
 			"It can be hard to start something, but it only takes an average of 66 days to form a new habit!",
 			"Good idea! Procrastination can also be a symptom of anxiety or depression. Do you feel anxious or depressed?",
-			"You’re not alone in that feeling *. One in five university students suffer from anxiety or depression. Thankfully there is many resources for students to reach out to on most campuses. Have you looked into your schools student resources?",
+			"You’re not alone in that feeling. One in five university students suffer from anxiety or depression. Thankfully there is many resources for students to reach out to on most campuses. Have you looked into your schools student resources?",
 			"It never hurts to talk to someone, but if you’re sure there are things you can do for yourself that can help with anxiety. Is your sleep schedule regular?",
 			"I see. How about exercise? Do you workout or play any sports." };
 
@@ -99,19 +100,23 @@ public class Discussion extends Topic {
 		Pattern p2 = Pattern.compile("(.*)(i'm)(.*)");
 		Matcher m2 = p2.matcher(input);
 		
-		// Case 3: user responds with my
-		Pattern p3 = Pattern.compile("(.*)(my)(.*)");
+		// Case 3: user response contains "stressed"
+		Pattern p3 = Pattern.compile("(.*)(stressed)(.*)");
 		Matcher m3 = p3.matcher(input);
 		
-		// Case 4: User responds with yes
-		Pattern p4 = Pattern.compile("(.*)(yes)(.*)");
+		// Case 4: User response contains "depressed"
+		Pattern p4 = Pattern.compile("(.*)(depressed)(.*)");
 		Matcher m4 = p4.matcher(input);
 		
-		// Case 5: User responds with no
-		Pattern p5 = Pattern.compile("(.*)(no)(.*)");
-		Matcher m5 = p4.matcher(input);
+		// Case 5: User responds with yes
+		Pattern p5 = Pattern.compile("(.*)(yes)(.*)");
+		Matcher m5 = p5.matcher(input);
 		
-		if(m1.find()) {
+		// Case 6: User responds with no
+		Pattern p6 = Pattern.compile("(.*)(no)(.*)");
+		Matcher m6 = p6.matcher(input);
+		
+		if(m1.find() && !m2.find()) {
 			System.out.println("Case 1");
 			//Case 1.1: I am
 			Pattern p1_1 = Pattern.compile("(.*)(am)(.*)");
@@ -132,7 +137,7 @@ public class Discussion extends Topic {
 						//Change graph weight
 					}else if(sadList.contains(keyword.toLowerCase())) {
 						//Change graph weights
-						output = "I'm sorry to hear that.";
+						output = "I'm sorry to hear that, what's wrong?";
 					}
 					
 					// Case 1.1.2 I am BLANK. EX I am worried/sad
@@ -195,7 +200,7 @@ public class Discussion extends Topic {
 					//Change graph weight
 				}else if(sadList.contains(keyword.toLowerCase())) {
 					//Change graph weights
-					output = "I'm sorry to hear that.";
+					output = "I'm sorry to hear that. " + sampleMessages[6];
 				}else{
 					output = noMessages[(int) (Math.random()*noMessages.length)];
 				}	
@@ -209,8 +214,24 @@ public class Discussion extends Topic {
 				System.out.println("Case 2.3");
 				keyword = m2.group(3);
 				keyword = keyword.replaceAll("\\s+","");
+				
 				if(happyList.contains(keyword.toLowerCase())) {
-					output = "I'm glad to hear that you're" + keyword + "! Keep it up by getting into healthy habits. ";
+					Scanner reader = new Scanner(System.in);
+					System.out.println("I'm glad to hear that you're " + keyword + "! Keep it up by getting into healthy habits. Do you excercise?");
+					String temp = reader.next();
+					temp = temp.toLowerCase();
+					Pattern p2_3_1 = Pattern.compile("(.*)(yes)(.*)");
+					Matcher m2_3_1 = p2_3_1.matcher(temp);
+					Pattern p2_3_2 = Pattern.compile("(.*+)(do)(.*+)");
+					Matcher m2_3_2 = p2_3_2.matcher(temp);
+					
+					if(m2_3_1.matches() || m2_3_2.matches()) {
+						output = "Good for you! Excercise has been proven to improve concentration, helps you sleep better,"
+								+ " and reduce anxiety and depression. What else you would like to talk about?";
+					}else {
+						output = "You should try it. Excercise has been proven to improve concentration, helps you sleep better,"
+								+ " and reduces anxiety and depression.";
+					}
 					//Change graph weight
 				}else if(sadList.contains(keyword.toLowerCase())) {
 					//Change graph weights
@@ -220,7 +241,20 @@ public class Discussion extends Topic {
 				}
 				
 			}
+		}else if(m3.matches()) { // Case 3, user response contains stressed
+			System.out.println("Case 3");
+			output = "I'm sorry to hear that, make sure to block out time for yourself to unwind. \nRemeber, things you can't change aren't worth worrying about!";
+		}else if(m4.matches()) { // Case 4, user response contains depressed
+			System.out.println("Case 4");
+			output = sampleMessages[6];
+		}else if(m5.matches()) { // case 5, user response contains yes
+			System.out.println("Case 5");	
+			output = "That's good! I'm glad you're being proactive about you're problems. What else would you like to talk about?";
+		}else if(m6.matches()) { // Case 6, user response contains no
+			System.out.println("Case 6");
+			output = "I'd reccomend trying it, but if you aren't interested is there anything else you think would help?";
 		}else {
+			System.out.println("No case match");
 			output = noMessages[(int) (Math.random()*noMessages.length)];
 		}
 		
