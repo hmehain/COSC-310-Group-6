@@ -94,7 +94,7 @@ public class Discussion extends Topic {
 		negativeList.add("tired");
 
 		// Case 1: User responds with I
-		Pattern p1 = Pattern.compile("(.*)(i\\s)(.*)");
+		Pattern p1 = Pattern.compile("(i\\s)(.*)");
 		Matcher m1 = p1.matcher(input);
 
 		// Case 2: User responds with I'm
@@ -117,9 +117,13 @@ public class Discussion extends Topic {
 		Pattern p6 = Pattern.compile("(.*)(no)(.*)");
 		Matcher m6 = p6.matcher(input);
 		
-		// Case 6: user response contains "Tired"
+		// Case 7: user response contains "Tired"
 		Pattern p7 = Pattern.compile("(.*)(tired)(.*)");
 		Matcher m7 = p7.matcher(input);
+		
+		// Case 8: User response contains "procrastinate"
+		Pattern p8 = Pattern.compile("(.*)(procrastinate)(.*)");
+		Matcher m8 = p8.matcher(input);
 		
 		if (m1.matches() && !m2.matches()) {
 			System.out.println("Case 1");
@@ -281,7 +285,7 @@ public class Discussion extends Topic {
 		} else if (m6.find()) { // Case 6, user response contains no
 			System.out.println("Case 6");
 			output = "I'd reccomend trying it, but if you aren't interested is there anything else you think would help?";
-		} else if (m7.find()){
+		} else if (m7.find()){ // Case 7, "tired"
 			System.out.println("Case 7");
 			System.out.println("Do you excercise? It can help with sleeping better.");
 			String temp = scanner1.next().toLowerCase();
@@ -293,32 +297,88 @@ public class Discussion extends Topic {
 			if (m7_1.find() || m7_2.find()) {
 				System.out.println("Good for you! Excercise has been proven to improve concentration, helps you sleep better,"
 						+ " and reduce anxiety and depression. Since you're still tired do you have a regular sleep schedule?");
-				String temp1 = scanner1.next().toLowerCase();
-				m7_1 = p7_1.matcher(temp1);
+				scanner1.nextLine();
+				temp = scanner1.next().toLowerCase();
+				m7_1 = p7_1.matcher(temp);
 
 				if(m7_1.find()) {
 					System.out.println("Thats good, keeping a regular sleep schedule has been proven to improve sleep quality. Make sure you keep it up! Are you going to bed early enough?"
 							+ "\n The national sleep foundation reccomends 7 - 9 hours for adults between 18 and 64. "
 							+ "\n Apart from that you seem to have excellent sleep habits, if you have trouble falling asleep that can be caused from stress or anxiety."
 							+ "\n Have you been feeling stressed or anxious lately?");
-					String temp2 = scanner1.next().toLowerCase();
-					m7_1 = p7_1.matcher(temp2);
-					if(m7_1.find()) {
+					scanner1.nextLine();
+					temp = scanner1.next().toLowerCase();
+					Pattern p7_3 = Pattern.compile("(.*)(maybe)(.*)");
+					Matcher m7_3 = p7_3.matcher(temp);
+					m7_1 = p7_1.matcher(temp);
+					if(m7_1.find() || m7_3.find()) {
 						output = sampleMessages[6];
 					}else {
 						output = "Thats good. Just make sure you're getting enough sleep then.";
 					}
 				}else {
-					output = "You should try sleeping at around the same time every night. It's been proven to improve the quality of sleep.";
+					output = "You should try sleeping at around the same time every night. It's been proven to improve the quality of sleep. Is there anything else you would like to talk about?";
 				}
 			} else {
 				System.out.println("You should try it. Excercise has been proven to improve concentration, helps you sleep better,"
 						+ " and reduces anxiety and depression. Do you have a reagular sleep schedule?");
+				scanner1.nextLine();
 				temp = scanner1.next().toLowerCase();
+				m7_1 = p7_1.matcher(temp);
 				if(m7_1.find()) {
-					output = "Thats good, keeping a regular sleep schedule has been proven to improve sleep quality. Make sure you keep it up!";
+					output = "Thats good, keeping a regular sleep schedule has been proven to improve sleep quality. Make sure you keep it up!"
+							+ "\n Try excercising regularly to see if you feel less tired. If that doesn't help trouble sleeping can also be caused by stress or anxiety."
+							+ "\n have you been feeling stressed on axious lately?";
+					scanner1.nextLine();
+					temp = scanner1.next().toLowerCase();
+					Pattern p7_3 = Pattern.compile("(.*)(maybe)(.*)");
+					Matcher m7_3 = p7_3.matcher(temp);
+					m7_1 = p7_1.matcher(temp);
+					if(m7_1.find() || m7_3.find()) {
+						output = sampleMessages[6];
+					}else {
+						output = "That's good. Just try excercise for now. Is there anything else that's been bothering you?";
+					}
+				}else {
+					output = "I would recommend trying excercise and a regular sleep schedule. If that doesn't help trouble sleeping can be caused by stress or anxiety."
+							+ "\n have you been feeling stressed or anxious lately?";
+					scanner1.nextLine();
+					temp = scanner1.next().toLowerCase();
+					Pattern p7_3 = Pattern.compile("(.*)(maybe)(.*)");
+					Matcher m7_3 = p7_3.matcher(temp);
+					m7_1 = p7_1.matcher(temp);
+					if(m7_1.find() || m7_3.find()) {
+						output = sampleMessages[6];
+					}else {
+						output = "That's good. Try my reccomedations and see if they help. Is there anything else you wanted to talk about?";
+					}
 				}
 			}
+		} else if(m8.find()){
+			System.out.println(sampleMessages[2]);
+			scanner1.nextLine();
+			String temp = scanner1.next().toLowerCase();
+			Pattern p8_1 = Pattern.compile("(.*)(yes)(.*)");
+			Matcher m8_1 = p8_1.matcher(temp);
+			Pattern p8_2 = Pattern.compile("(.*)(have)(.*)");
+			Matcher m8_2 = p8_2.matcher(temp);
+			
+			if(m8_1.find() || m8_2.find()) {
+				System.out.println("Procrastination can also be a symptom of anxiety or depression. Do you feel anxious or depressed?");
+				scanner1.nextLine();
+				temp = scanner1.next().toLowerCase();
+				Pattern p8_3 = Pattern.compile("(.*)(maybe)(.*)");
+				Matcher m8_3 = p8_3.matcher(temp);
+				m8_1 = p8_1.matcher(temp);
+				if(m8_1.find() || m8_3.find()) {
+					output = sampleMessages[6];
+				}else {
+					output = "Thats good. I'd trying out a journal then.";
+				}
+			}else {
+				output = "I'd reccomed trying it. It can be hard to start something, but it only takes an average of 66 days to form a new habit!";
+			}
+			
 		} else {
 			System.out.println("No case match");
 			output = noMessages[(int) (Math.random() * noMessages.length)];
