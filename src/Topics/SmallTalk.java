@@ -134,7 +134,7 @@ public class SmallTalk extends Topic {
 			} else if (words.length == 1) { // If its only a one word response assume the word is the gender.
 				gender = input;
 			} else {
-				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'Guy' or 'Girl'.";
+				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'male' or 'female'.";
 				PrintMessage.messageFromBot(output);
 				input = in.nextLine();
 				gender = input;
@@ -153,6 +153,7 @@ public class SmallTalk extends Topic {
 				output = "I'm sorry I didnt understand you, would you be able to tell me your gender again? Answer with either a 'male' or 'female'.";
 				input = in.nextLine();
 				gender = input;
+				System.out.println(gender);
 			}
 			
 			PrintMessage.messageFromBot(output); // This last message isn't being printed.

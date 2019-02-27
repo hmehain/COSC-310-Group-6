@@ -101,8 +101,8 @@ public class Discussion extends Topic {
 		Pattern p2 = Pattern.compile("(.*)(i'm)(.*)");
 		Matcher m2 = p2.matcher(input);
 
-		// Case 3: user response contains "stressed"
-		Pattern p3 = Pattern.compile("(.*)(stressed)(.*)");
+		// Case 3: user response contains "stress"
+		Pattern p3 = Pattern.compile("(.*)(stress)(.*)");
 		Matcher m3 = p3.matcher(input);
 
 		// Case 4: User response contains "depressed"
@@ -114,16 +114,20 @@ public class Discussion extends Topic {
 		Matcher m5 = p5.matcher(input);
 
 		// Case 6: User responds with no
-		Pattern p6 = Pattern.compile("(.*)(no)(.*)");
+		Pattern p6 = Pattern.compile("(.*)(no\\s)(.*)");
 		Matcher m6 = p6.matcher(input);
 		
 		// Case 7: user response contains "Tired"
 		Pattern p7 = Pattern.compile("(.*)(tired)(.*)");
 		Matcher m7 = p7.matcher(input);
 		
-		// Case 8: User response contains "procrastinate"
-		Pattern p8 = Pattern.compile("(.*)(procrastinate)(.*)");
+		// Case 8: User response contains "procrastinate/ing"
+		Pattern p8 = Pattern.compile("(.*)(procrastinat)(.*)");
 		Matcher m8 = p8.matcher(input);
+		
+		// Case 9: Goodbye
+		Pattern p9 = Pattern.compile("(.*)(goodbye)(.*)");
+		Matcher m9 = p9.matcher(input);
 		
 		if (m1.matches() && !m2.matches()) {
 			System.out.println("Case 1");
@@ -188,7 +192,7 @@ public class Discussion extends Topic {
 				
 			} else { // Case 1.3: I BLANK. EX I hate BLANK, I love BLANK, I procrastinate, ECT
 				System.out.println("Case 1.3");
-				String[] words = m1.group(3).split(" "); // Splits the String into individual words
+				String[] words = m1.group(2).split(" "); // Splits the String into individual words
 				String keyword = words[0];
 				String sentence = null;
 				if (words.length > 1) {
@@ -275,7 +279,33 @@ public class Discussion extends Topic {
 			}
 		} else if (m3.find()) { // Case 3, user response contains stressed
 			System.out.println("Case 3");
-			output = "I'm sorry to hear that, make sure to block out time for yourself to unwind. \nRemeber, things you can't change aren't worth worrying about! Whats been stressing you out?";
+			System.out.println("I'm sorry to hear that, make sure to block out time for yourself to unwind. \nRemeber, things you can't change aren't worth worrying about! Whats been stressing you out?");
+			String temp = scanner1.next().toLowerCase();
+			Pattern p3_1 = Pattern.compile("(.*)(school)(.*)");
+			Matcher m3_1 = p3_1.matcher(temp);
+			Pattern p3_2 = Pattern.compile("(.*)(work)(.*)");
+			Matcher m3_2 = p3_2.matcher(temp);
+			
+			if(m3_1.find()) {
+				output = "I'm sorry schools been so stressful lately. Hopefully it will be worth all of the hard work in the end!"
+						+ "\nYou can try to free up some extra time by improving your time management skills. Procrastination can lead to more stress down the line."
+						+ "\nDid you have anything else you wanted to talk about?";
+			}else if(m3_2.find()){
+				System.out.println("Sorry to hear that your work has been so stressful. Do you enjoy what you do?");
+				scanner1.hasNextLine();
+				temp = scanner1.next().toLowerCase();
+				Pattern p3_3 = Pattern.compile("(.*)(yes)(.*)");
+				Matcher m3_3 = p3_3.matcher(temp);
+				Pattern p3_4 = Pattern.compile("(.*)(yeah)(.*)");
+				Matcher m3_4 = p3_4.matcher(temp);
+				if(m3_3.find() || m3_4.find()) {
+					output = "Thats good, its important to enjoy what you do. Hopefully it will become less stressful soon.";
+				}else {
+					output = "Thats no good. Its important to enjoy what you do. Have you thought of doing something else?";
+				}
+			}else{
+					output = "I'm sorry about that. I hope it gets easier for you soon. It really does help to find someone to talk to. I'd reccomend talking to friends or family.";				
+			}
 		} else if (m4.find()) { // Case 4, user response contains depressed
 			System.out.println("Case 4");
 			output = sampleMessages[6];
@@ -284,7 +314,7 @@ public class Discussion extends Topic {
 			output = "That's good! I'm glad you're being proactive about you're problems. What else would you like to talk about?";
 		} else if (m6.find()) { // Case 6, user response contains no
 			System.out.println("Case 6");
-			output = "I'd reccomend trying it, but if you aren't interested is there anything else you think would help?";
+			output = "I'd reccomend looking into it. Are you having any other problems?";
 		} else if (m7.find()){ // Case 7, "tired"
 			System.out.println("Case 7");
 			System.out.println("Do you excercise? It can help with sleeping better.");
@@ -303,9 +333,9 @@ public class Discussion extends Topic {
 
 				if(m7_1.find()) {
 					System.out.println("Thats good, keeping a regular sleep schedule has been proven to improve sleep quality. Make sure you keep it up! Are you going to bed early enough?"
-							+ "\n The national sleep foundation reccomends 7 - 9 hours for adults between 18 and 64. "
-							+ "\n Apart from that you seem to have excellent sleep habits, if you have trouble falling asleep that can be caused from stress or anxiety."
-							+ "\n Have you been feeling stressed or anxious lately?");
+							+ "\nThe national sleep foundation reccomends 7 - 9 hours for adults between 18 and 64. "
+							+ "\nApart from that you seem to have excellent sleep habits, if you have trouble falling asleep that can be caused from stress or anxiety."
+							+ "\nHave you been feeling stressed or anxious lately?");
 					scanner1.nextLine();
 					temp = scanner1.next().toLowerCase();
 					Pattern p7_3 = Pattern.compile("(.*)(maybe)(.*)");
@@ -354,17 +384,17 @@ public class Discussion extends Topic {
 					}
 				}
 			}
-		} else if(m8.find()){
+		} else if(m8.find()){ // Case 8
+			System.out.println("Case 8");
 			System.out.println(sampleMessages[2]);
-			scanner1.nextLine();
 			String temp = scanner1.next().toLowerCase();
 			Pattern p8_1 = Pattern.compile("(.*)(yes)(.*)");
 			Matcher m8_1 = p8_1.matcher(temp);
-			Pattern p8_2 = Pattern.compile("(.*)(have)(.*)");
+			Pattern p8_2 = Pattern.compile("(.*)(have\\s)(.*)");
 			Matcher m8_2 = p8_2.matcher(temp);
 			
 			if(m8_1.find() || m8_2.find()) {
-				System.out.println("Procrastination can also be a symptom of anxiety or depression. Do you feel anxious or depressed?");
+				System.out.println("It's good that you're trying to improve yourself! Procrastination can also be a symptom of anxiety or depression. Do you feel anxious or depressed?");
 				scanner1.nextLine();
 				temp = scanner1.next().toLowerCase();
 				Pattern p8_3 = Pattern.compile("(.*)(maybe)(.*)");
@@ -373,11 +403,15 @@ public class Discussion extends Topic {
 				if(m8_1.find() || m8_3.find()) {
 					output = sampleMessages[6];
 				}else {
-					output = "Thats good. I'd trying out a journal then.";
+					output = "Thats good. I'd reccomend trying out a journal. It can be hard to start something, but it only takes an average of 66 days to form a new habit!. Is there anything else you wante to talk about?";
 				}
 			}else {
-				output = "I'd reccomed trying it. It can be hard to start something, but it only takes an average of 66 days to form a new habit!";
+				output = "I'd reccomend trying it. It can be hard to start something, but it only takes an average of 66 days to form a new habit! Is there anything else you wante to talk about?";
 			}
+			
+		}else if(m9.find()){
+			System.out.println("Goodbye");
+			System.exit(0);
 			
 		} else {
 			System.out.println("No case match");
