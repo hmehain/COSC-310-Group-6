@@ -14,6 +14,7 @@ import java.io.File;
 import java.net.URL;
 
 import edu.mit.jwi.data.FileProvider;
+import edu.mit.jwi.item.POS;
 
 /**
  * Basic {@code IDictionary} implementation that mounts files on disk and has
@@ -37,11 +38,6 @@ public class Dictionary extends CachingDictionary {
 	 *             if the specified url is <code>null</code>
 	 * @since JWI 1.0
 	 */
-	// construct the URL to the Wordnet dictionary directory
-	String path = File.pathSeparator + "dict"
-	URL url = new URL("file", null, path)
-	
-	
 	
 	public Dictionary(URL wordnetDir) {
 		super(new DataSourceDictionary(new FileProvider(wordnetDir)));
@@ -59,6 +55,7 @@ public class Dictionary extends CachingDictionary {
 	 */
 	public Dictionary(File wordnetDir) {
 		super(new DataSourceDictionary(new FileProvider(wordnetDir)));
-	}
+	} 
+	
 	
 }
