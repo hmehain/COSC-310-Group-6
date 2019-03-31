@@ -52,10 +52,12 @@ Rather than synonyms being hardcoded, I used the MIT Java Wordnet Interface to b
 # A3 Additions
 Features:
 * Synonym recognition - WordNet
+
 The bot can understand a larger number of keywords in order to change context graph weights, as it is not limited by a hardcoded list.
 
 Example: 
 > Thebo: How are you feeling?
+
 > User: I'm felicitous today
 
 In the above example, "felicitous" is recognized as a synonym for "happy."
