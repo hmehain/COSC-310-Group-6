@@ -5,14 +5,16 @@ import static org.junit.Assert.*;
 import java.util.*;
 
 import org.junit.Test;
+import edu.mit.jwi.*;
 
-/**
+
 public class Synonyms {
 	// Might make these into a 2d array with weights
 	private List<String> greetingList = new ArrayList<String>();
 	private List<String> happyList = new ArrayList<String>();
 	private List<String> sadList = new ArrayList<String>();
 
+	/**
 	// ----- List constructors ----- //
 	public void greetingConstructor() {
 		getGreetingList().add("hello");
@@ -50,6 +52,18 @@ public class Synonyms {
 	}
 	
 	*/
+	public void getSynonyms(IDictionary dict) {
+		
+		// look up first sense of the word "hello"
+		IIndexWord idxWord = dict.getIndexWord("hello", POS.NOUN);
+		IWordID wordID = idxWord.getWordIDs().get(0); //1st meaning
+		IWord word = dict.getWord(wordID);
+		ISynset synset = word.getSynset();
+		// iterate over words associated with the synset
+		for(IWord w : synset.getWords())
+			getGreetingList.add(w.getLemma());
+		
+	}	
 
 	// ----- Getters and Setters ----- //
 	public List<String> getGreetingList() {
