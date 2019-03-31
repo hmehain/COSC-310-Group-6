@@ -8,6 +8,9 @@ We identified five problems common among university students-depression, anxiety
 
 Currently the bot runs in the console. Although we spent time on building an Android app, we were not able to implement it within the timeframe of this project.
 
+## Changes in A3
+Rather than synonyms being hardcoded, I used the MIT Java Wordnet Interface to build a dictionary of synonyms.
+
 # Class Breakdown
 
 # ConvoBot Classes
