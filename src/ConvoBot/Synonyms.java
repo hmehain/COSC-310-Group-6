@@ -6,6 +6,7 @@ import java.util.*;
 
 import org.junit.Test;
 
+/**
 public class Synonyms {
 	// Might make these into a 2d array with weights
 	private List<String> greetingList = new ArrayList<String>();
@@ -47,6 +48,8 @@ public class Synonyms {
 		Collections.sort(getHappyList(), String.CASE_INSENSITIVE_ORDER);
 
 	}
+	
+	*/
 
 	// ----- Getters and Setters ----- //
 	public List<String> getGreetingList() {
