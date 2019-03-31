@@ -63,6 +63,15 @@ public class Synonyms {
 		for(IWord w : synset.getWords())
 			getGreetingList.add(w.getLemma());
 		
+		// look up first sense of the word "happy"
+				IIndexWord idxWord = dict.getIndexWord("happy", POS.ADJECTIVE);
+				IWordID wordID = idxWord.getWordIDs().get(0); //1st meaning
+				IWord word = dict.getWord(wordID);
+				ISynset synset = word.getSynset();
+				// iterate over words associated with the synset
+				for(IWord w : synset.getWords())
+					getHappyList.add(w.getLemma());
+		
 	}	
 
 	// ----- Getters and Setters ----- //
